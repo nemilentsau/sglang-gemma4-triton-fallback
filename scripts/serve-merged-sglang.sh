@@ -10,7 +10,7 @@ usage() {
 Usage:
   scripts/serve-merged-sglang.sh MERGED_MODEL_DIR [sglang args...]
 
-Starts SGLang for a repaired unquantized Gemma merged artifact.
+Starts SGLang for a repaired Gemma merged artifact.
 
 Environment:
   HOST=127.0.0.1

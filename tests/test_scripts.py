@@ -33,9 +33,11 @@ def test_native_lora_path_is_kept_as_failure_repro() -> None:
     assert "/model_info" in script
 
 
-def test_readme_centers_backend_fallback_not_model_quality() -> None:
+def test_readme_centers_backend_fallback_recipe() -> None:
     readme = read_repo_file("README.md")
 
     assert "FlashInfer" in readme
     assert "Triton" in readme
-    assert "not a benchmark" in readme
+    assert "native LoRA adapter serving fails" in readme
+    assert "merge-and-serve is the workaround" in readme
+    assert "Reproduce the FlashInfer failure" in readme

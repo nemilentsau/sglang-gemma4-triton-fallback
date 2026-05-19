@@ -4,14 +4,14 @@ This repository is a focused repro for Gemma 4 E2B serving on SGLang.
 
 ## Scope
 
-- Keep the story centered on unquantized Gemma 4 E2B merge-and-serve.
+- Keep the story centered on Gemma 4 E2B merge-and-serve.
 - Keep native LoRA only as a failure path to reproduce.
 - Keep the Triton versus FlashInfer backend behavior explicit.
 - Use only small synthetic fixtures.
 
 ## Out Of Scope
 
-- Do not add quantization workflows or claims.
+- Do not add unrelated serving variants or claims.
 - Do not add benchmark claims unless the benchmark command and logs are added in
   the same change.
 - Do not claim a compatibility path works unless the serving smoke test actually
