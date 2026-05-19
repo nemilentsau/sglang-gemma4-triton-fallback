@@ -33,5 +33,5 @@ uv run pyright
 uv run pytest -v
 git diff --check
 jq empty fixtures/ticket-triage/schema.json fixtures/ticket-triage/*.jsonl
-bash -n scripts/*.sh
+bash -n scripts/setup/*.sh scripts/training/*.sh scripts/serving/*.sh
 ```

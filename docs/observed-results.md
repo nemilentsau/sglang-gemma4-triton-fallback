@@ -32,7 +32,7 @@ Command:
 
 ```bash
 BATCH_SIZE=8 STARTUP_TIMEOUT_SECONDS=900 \
-  scripts/run-sglang-native-lora-check.sh
+  scripts/serving/run-sglang-native-lora-check.sh
 ```
 
 First, an adapter with regex target modules failed because SGLang only accepts
@@ -55,7 +55,7 @@ Command:
 
 ```bash
 CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
-  scripts/run-merged-sglang-check.sh \
+  scripts/serving/run-merged-sglang-check.sh \
   models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
 ```
 
@@ -84,7 +84,7 @@ Command:
 ```bash
 ATTENTION_BACKEND=flashinfer \
 CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
-  scripts/run-merged-sglang-check.sh \
+  scripts/serving/run-merged-sglang-check.sh \
   models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
 ```
 

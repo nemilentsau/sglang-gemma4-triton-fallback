@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$REPO_ROOT"
-source "${REPO_ROOT}/scripts/gradient-env.sh"
+source "${REPO_ROOT}/scripts/setup/gradient-env.sh"
 
 REVISION="${REVISION:-905e84b50c4d2a365ebde34e685027578e6728db}"
 BASE_MODEL_DIR="${BASE_MODEL_DIR:-models/gemma4-e2b-it/${REVISION}}"
@@ -18,19 +18,19 @@ DISABLE_CUDA_GRAPH="${DISABLE_CUDA_GRAPH:-1}"
 
 if [[ ! -d "$BASE_MODEL_DIR" ]]; then
   echo "Base model directory not found: $BASE_MODEL_DIR" >&2
-  echo "Run scripts/download-model.sh first." >&2
+  echo "Run scripts/training/download-model.sh first." >&2
   exit 1
 fi
 
 if [[ ! -d "$ADAPTER_DIR" ]]; then
   echo "Adapter directory not found: $ADAPTER_DIR" >&2
-  echo "Run scripts/train-lora.sh first." >&2
+  echo "Run scripts/training/train-lora.sh first." >&2
   exit 1
 fi
 
 if ! uv run --no-sync python -c 'from importlib import import_module; import_module("sglang.launch_server")' >/dev/null 2>&1; then
   echo "SGLang launch server is not importable in the uv environment." >&2
-  echo "Run scripts/install-sglang.sh on the cloud box first." >&2
+  echo "Run scripts/setup/install-sglang.sh on the cloud box first." >&2
   exit 1
 fi
 

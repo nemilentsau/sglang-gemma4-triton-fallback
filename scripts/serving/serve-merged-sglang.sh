@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$REPO_ROOT"
-source "${REPO_ROOT}/scripts/gradient-env.sh"
+source "${REPO_ROOT}/scripts/setup/gradient-env.sh"
 
 usage() {
   cat >&2 <<'EOF'
 Usage:
-  scripts/serve-merged-sglang.sh MERGED_MODEL_DIR [sglang args...]
+  scripts/serving/serve-merged-sglang.sh MERGED_MODEL_DIR [sglang args...]
 
 Starts SGLang for a repaired Gemma merged artifact.
 
@@ -47,7 +47,7 @@ fi
 for file in processor_config.json; do
   if [[ ! -s "${MERGED_MODEL_DIR}/${file}" ]]; then
     echo "Missing Gemma processor config: ${MERGED_MODEL_DIR}/${file}" >&2
-    echo "Run scripts/repair-processor-configs.sh first." >&2
+    echo "Run scripts/serving/repair-processor-configs.sh first." >&2
     exit 1
   fi
 done

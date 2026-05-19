@@ -4,7 +4,7 @@ set -euo pipefail
 MODEL_DIR="${1:-${MODEL_DIR:-}}"
 
 if [[ -z "$MODEL_DIR" ]]; then
-  echo "Usage: scripts/check-processor-configs.sh MODEL_DIR" >&2
+  echo "Usage: scripts/serving/check-processor-configs.sh MODEL_DIR" >&2
   exit 2
 fi
 

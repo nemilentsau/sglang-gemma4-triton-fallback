@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$REPO_ROOT"
 
 REVISION="${REVISION:-905e84b50c4d2a365ebde34e685027578e6728db}"
@@ -19,7 +19,7 @@ if [[ ! -d "$ADAPTER_DIR" ]]; then
   exit 1
 fi
 
-uv run --extra train python -m scripts.merge_gemma4_lora \
+uv run --extra train python -m scripts.training.merge_gemma4_lora \
   --base-model-dir "$BASE_MODEL_DIR" \
   --adapter-dir "$ADAPTER_DIR" \
   --output-dir "$MERGED_MODEL_DIR" \

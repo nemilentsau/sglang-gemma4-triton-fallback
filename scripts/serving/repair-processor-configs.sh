@@ -4,7 +4,7 @@ set -euo pipefail
 usage() {
   cat >&2 <<'EOF'
 Usage:
-  scripts/repair-processor-configs.sh SOURCE_MODEL_DIR MERGED_MODEL_DIR
+  scripts/serving/repair-processor-configs.sh SOURCE_MODEL_DIR MERGED_MODEL_DIR
 
 Copies Gemma VLM processor metadata into a merged model directory.
 

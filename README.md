@@ -67,29 +67,33 @@ log excerpts.
 ## Repository Layout
 
 ```text
-fixtures/ticket-triage/     Synthetic chat fixture used to create adapter behavior
-scripts/download-model.sh   Download the pinned Gemma 4 E2B snapshot
-scripts/train-lora.sh       Train the small PEFT LoRA adapter
-scripts/run-sglang-native-lora-check.sh
-                            Reproduce native LoRA loading failure
-scripts/merge-lora.sh       Merge the adapter into standalone weights
-scripts/serve-merged-sglang.sh
-                            Start SGLang with Triton fallback defaults
-scripts/run-merged-sglang-check.sh
-                            Start server, wait for /model_info, run smoke test
-scripts/smoke-test.sh       Validate OpenAI-compatible chat completions
+fixtures/ticket-triage/   Synthetic chat fixture used to create adapter behavior
+scripts/setup/            Paperspace and SGLang environment setup
+scripts/training/         Model download, adapter training, and adapter merge
+scripts/serving/          Native LoRA failure and merged-model serving checks
+docs/                     Recorded run notes and log excerpts
 ```
 
 Generated model weights, adapters, and run logs are ignored.
 
-## Environment
+Each script folder has its own README:
 
-Use `uv` and a CUDA-capable Linux machine. The recorded run used the SGLang
-CUDA 13 runtime container on Paperspace. In that environment, source the CUDA
-compatibility settings before running torch or SGLang:
+- [scripts/setup/README.md](scripts/setup/README.md)
+- [scripts/training/README.md](scripts/training/README.md)
+- [scripts/serving/README.md](scripts/serving/README.md)
+
+## Paperspace Setup
+
+The recorded run used Paperspace Gradient with the SGLang CUDA 13 runtime
+container. Follow [scripts/setup/README.md](scripts/setup/README.md) for the
+full notebook setup, including Advanced Options, container name, Jupyter start
+command, CUDA compatibility verification, and restart recovery.
+
+After entering the repo on the Paperspace box, source the compatibility
+environment:
 
 ```bash
-. scripts/gradient-env.sh
+. scripts/setup/gradient-env.sh
 ```
 
 Install the Python environment:
@@ -105,13 +109,13 @@ Set `HF_TOKEN` before downloading if Hugging Face requires gated model access.
 Download the pinned model:
 
 ```bash
-scripts/download-model.sh
+scripts/training/download-model.sh
 ```
 
 Train the small adapter:
 
 ```bash
-scripts/train-lora.sh \
+scripts/training/train-lora.sh \
   --max-train-examples 16 \
   --epochs 1 \
   --log-every-steps 4
@@ -121,36 +125,36 @@ Install SGLang after training. The training command runs `uv sync`, so install
 the serving package after the adapter is created:
 
 ```bash
-scripts/install-sglang.sh
+scripts/setup/install-sglang.sh
 ```
 
 Reproduce the native LoRA failure:
 
 ```bash
 BATCH_SIZE=8 STARTUP_TIMEOUT_SECONDS=900 \
-  scripts/run-sglang-native-lora-check.sh
+  scripts/serving/run-sglang-native-lora-check.sh
 ```
 
 Merge the adapter:
 
 ```bash
-scripts/merge-lora.sh
+scripts/training/merge-lora.sh
 ```
 
 Reinstall SGLang before serving if the merge command refreshed the uv
 environment:
 
 ```bash
-scripts/install-sglang.sh
+scripts/setup/install-sglang.sh
 ```
 
 Check or repair Gemma processor metadata:
 
 ```bash
-scripts/check-processor-configs.sh \
+scripts/serving/check-processor-configs.sh \
   models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
 
-scripts/repair-processor-configs.sh \
+scripts/serving/repair-processor-configs.sh \
   models/gemma4-e2b-it/905e84b50c4d2a365ebde34e685027578e6728db \
   models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
 ```
@@ -159,7 +163,7 @@ Run the Triton serving check:
 
 ```bash
 CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
-  scripts/run-merged-sglang-check.sh \
+  scripts/serving/run-merged-sglang-check.sh \
   models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
 ```
 
@@ -171,7 +175,7 @@ Reproduce the FlashInfer failure:
 ```bash
 ATTENTION_BACKEND=flashinfer \
 CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
-  scripts/run-merged-sglang-check.sh \
+  scripts/serving/run-merged-sglang-check.sh \
   models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
 ```
 
