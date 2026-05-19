@@ -89,17 +89,10 @@ container. Follow [scripts/setup/README.md](scripts/setup/README.md) for the
 full notebook setup, including Advanced Options, container name, Jupyter start
 command, CUDA compatibility verification, and restart recovery.
 
-After entering the repo on the Paperspace box, source the compatibility
-environment:
+After entering the repo on the Paperspace box, run:
 
 ```bash
-. scripts/setup/gradient-env.sh
-```
-
-Install the Python environment:
-
-```bash
-uv sync --extra dev --extra train --extra model --extra download
+scripts/setup/setup-paperspace.sh
 ```
 
 Set `HF_TOKEN` before downloading if Hugging Face requires gated model access.

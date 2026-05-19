@@ -42,40 +42,28 @@ Open a notebook terminal:
 cd /notebooks/sglang-gemma4-triton-fallback
 ```
 
-Source the CUDA 13 compatibility environment in every shell that will run torch
-or SGLang:
+Run the setup script:
 
 ```bash
-. scripts/setup/gradient-env.sh
+scripts/setup/setup-paperspace.sh
 ```
 
-This puts `/usr/local/cuda/compat` ahead of the host driver libraries so Python
-sees CUDA driver API `13000`.
+That script:
 
-Verify that the compatibility driver is active:
-
-```bash
-python3 - <<'PY'
-import ctypes
-
-version = ctypes.c_int()
-rc = ctypes.CDLL("libcuda.so.1").cuDriverGetVersion(ctypes.byref(version))
-print(f"cuDriverGetVersion rc={rc} version={version.value}")
-PY
-```
-
-Expected:
-
-```text
-cuDriverGetVersion rc=0 version=13000
-```
+- sources `scripts/setup/gradient-env.sh`
+- verifies the CUDA driver API through `scripts/setup/verify-cuda-env.sh`
+- installs the uv environment
+- installs `sglang==0.5.12`
+- verifies torch/SGLang import and CUDA state
 
 ## Install Python Dependencies
 
-Install the project environment:
+If you need to run the pieces manually, use:
 
 ```bash
+scripts/setup/verify-cuda-env.sh
 uv sync --extra dev --extra train --extra model --extra download
+scripts/setup/install-sglang.sh
 ```
 
 Train and merge scripts run `uv sync` for their own dependency groups, so install
@@ -108,9 +96,7 @@ while losing shell state and the uv environment. Recover with:
 
 ```bash
 cd /notebooks/sglang-gemma4-triton-fallback
-. scripts/setup/gradient-env.sh
-uv sync --extra dev --extra train --extra model --extra download
-scripts/setup/install-sglang.sh
+scripts/setup/setup-paperspace.sh
 ```
 
 Then rerun the relevant serving check from [../serving](../serving/README.md).

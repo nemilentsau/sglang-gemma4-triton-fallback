@@ -9,8 +9,7 @@ These scripts reproduce the SGLang behavior this repo is about:
 Run setup and training first:
 
 ```bash
-. scripts/setup/gradient-env.sh
-scripts/setup/install-sglang.sh
+scripts/setup/setup-paperspace.sh
 scripts/training/download-model.sh
 scripts/training/train-lora.sh --max-train-examples 16 --epochs 1 --log-every-steps 4
 scripts/training/merge-lora.sh

@@ -9,8 +9,7 @@ These scripts build the local artifacts used by the repro:
 Run setup first:
 
 ```bash
-. scripts/setup/gradient-env.sh
-uv sync --extra dev --extra train --extra model --extra download
+scripts/setup/setup-paperspace.sh
 ```
 
 ## Download The Pinned Model
@@ -45,7 +44,8 @@ adapters/google-gemma-4-e2b-it-ticket-triage-lora/905e84b50c4d2a365ebde34e685027
 
 ## Merge The Adapter
 
-Install SGLang after training if you plan to run serving checks:
+Install SGLang after training if you plan to run serving checks. The training
+script refreshes the uv environment, so rerun:
 
 ```bash
 scripts/setup/install-sglang.sh
