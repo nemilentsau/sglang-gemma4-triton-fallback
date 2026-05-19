@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TicketTriage",
+  "type": "object",
+  "required": [
+    "route",
+    "severity",
+    "macro",
+    "product_code"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "route": {
+      "type": "string",
+      "enum": [
+        "APP_DEFECTS",
+        "BILLING_LEDGER",
+        "FULFILLMENT_REPLACE",
+        "FULFILLMENT_TRACKING",
+        "IDENTITY_ACCESS",
+        "PRODUCT_GUIDANCE"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "S1",
+        "S2",
+        "S3"
+      ]
+    },
+    "macro": {
+      "type": "string",
+      "enum": [
+        "ACCOUNT_RECOVERY_FAST",
+        "DAMAGED_ITEM_SWAP",
+        "DUPLICATE_CHARGE_EXPLAIN",
+        "EXPORT_CRASH_REPORT",
+        "HOW_TO_STEPS",
+        "INVOICE_PROFILE_UPDATE",
+        "SIZE_EXCHANGE_START",
+        "SYNC_FAILURE_ESCALATE",
+        "TRACKING_STATUS_CHECK",
+        "TRIAL_EXTENSION_REVIEW"
+      ]
+    },
+    "product_code": {
+      "type": "string",
+      "enum": [
+        "ACCOUNT_PORTAL",
+        "DESKTOP_APP",
+        "MOBILE_APP",
+        "PHYSICAL_GOODS",
+        "SUBSCRIPTION_CORE"
+      ]
+    }
+  }
+}
