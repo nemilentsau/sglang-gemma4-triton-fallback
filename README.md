@@ -1,176 +1,75 @@
 # SGLang Gemma 4 Triton Fallback Repro
 
-This repo is a runnable repro for a Gemma 4 LoRA serving failure in SGLang and
-the recovery path that worked in the tested stack:
+This repo verifies one focused serving path for `google/gemma-4-E2B-it` on
+SGLang:
 
-> `sglang==0.5.12` fails to serve the `google/gemma-4-E2B-it` LoRA adapter
-> natively on the tested CUDA 13 stack. Merging the adapter into standalone
-> model weights avoids SGLang's native LoRA loader, but the merged model still
-> needs `--attention-backend triton` to pass the serving smoke test.
+1. native LoRA adapter serving fails for the trained adapter
+2. merging the adapter outside SGLang avoids that loader path
+3. the merged model serves successfully with Triton attention
+4. the same merged model fails with FlashInfer attention
 
-The repo gives you the smallest end-to-end path that demonstrates that behavior:
+The goal is not to benchmark or compare serving systems. The goal is to keep a
+small, repeatable repro for Gemma 4 E2B merge-and-serve behavior on the tested
+CUDA 13 stack.
 
-1. download the pinned Gemma 4 E2B snapshot
-2. train a tiny synthetic PEFT LoRA adapter
-3. reproduce the native LoRA adapter-loading failure
-4. merge the adapter outside SGLang
-5. serve the merged model with Triton attention
-6. reproduce the FlashInfer failure by changing one environment variable
+The useful takeaway is that merge-and-serve is the workaround, Triton is the
+serving backend that passes, and FlashInfer remains a reproducible failure path.
 
-The useful takeaway is the full failure chain: native LoRA adapter serving fails
-first, merge-and-serve is the workaround, and Triton attention is still required
-for the merged serving path.
+## Expected Outcomes
 
-## Why Triton
-
-Gemma 4 goes through SGLang's multimodal Gemma serving path. The observed server
-log says:
-
-```text
-Bidirectional attention for image tokens requires TritonAttnBackend.
-Falling back to causal attention, which may degrade image quality.
-```
-
-When `ATTENTION_BACKEND=flashinfer` is selected, SGLang reaches `/model_info`,
-then the first chat-completions smoke test fails in FlashInfer paged prefill:
-
-```text
-RuntimeError: Error in function 'BatchPrefillWithPagedKVCacheDispatched'
-FlashInfer Internal Error: Invalid configuration :
-NUM_MMA_Q=1 NUM_MMA_D_QK=32 NUM_MMA_D_VO=32 NUM_MMA_KV=1
-NUM_WARPS_Q=4 NUM_WARPS_KV=1
-```
-
-With `ATTENTION_BACKEND=triton`, the same merged artifact passes the
-chat-completions smoke test. That is the core repro.
-
-## Tested Stack
-
-Recorded on 2026-05-19:
-
-| Item | Value |
+| Path | Expected result |
 | --- | --- |
-| Base model | `google/gemma-4-E2B-it` |
-| Revision | `905e84b50c4d2a365ebde34e685027578e6728db` |
-| SGLang | `sglang==0.5.12` |
-| Torch | `torch==2.11.0+cu130` |
-| FlashInfer | `flashinfer-python==0.6.11.post1` |
-| GPU | NVIDIA RTX A6000, 49140 MiB |
-| CUDA driver API | 13000 through `/usr/local/cuda/compat` |
-| Native LoRA | Failed before readiness |
-| Merged model with Triton | Passed chat-completions smoke test |
-| Merged model with FlashInfer | Reached readiness, then failed during paged prefill |
+| Native LoRA | Fails before readiness while loading adapter weights |
+| Merged model with Triton | Passes the chat-completions smoke test |
+| Merged model with FlashInfer | Reaches readiness, then fails during paged prefill |
 
-See [docs/observed-results.md](docs/observed-results.md) for the run notes and
-log excerpts.
+See [docs/verification.md](docs/verification.md) for the commands that verify
+each row.
 
-## Repository Layout
+## Quick Start
 
-```text
-fixtures/ticket-triage/   Synthetic chat fixture used to create adapter behavior
-scripts/setup/            Paperspace and SGLang environment setup
-scripts/training/         Model download, adapter training, and adapter merge
-scripts/serving/          Native LoRA failure and merged-model serving checks
-docs/                     Recorded run notes and log excerpts
-```
-
-Generated model weights, adapters, and run logs are ignored.
-
-Each script folder has its own README:
-
-- [scripts/setup/README.md](scripts/setup/README.md)
-- [scripts/training/README.md](scripts/training/README.md)
-- [scripts/serving/README.md](scripts/serving/README.md)
-
-## Paperspace Setup
-
-The recorded run used Paperspace Gradient with the SGLang CUDA 13 runtime
-container. Follow [scripts/setup/README.md](scripts/setup/README.md) for the
-full notebook setup, including Advanced Options, container name, Jupyter start
-command, CUDA compatibility verification, and restart recovery.
-
-After entering the repo on the Paperspace box, run:
+On the Paperspace Gradient box, start with setup:
 
 ```bash
 scripts/setup/setup-paperspace.sh
 ```
 
+Then follow the end-to-end verification runbook in
+[docs/verification.md](docs/verification.md).
+
 Set `HF_TOKEN` before downloading if Hugging Face requires gated model access.
 
-## Reproduce
+## What This Builds
 
-Download the pinned model:
+The repro uses a tiny synthetic ticket-triage fixture to train a PEFT LoRA
+adapter, then merges that adapter into standalone model weights.
 
-```bash
-scripts/training/download-model.sh
+Default artifact paths:
+
+```text
+models/gemma4-e2b-it/905e84b50c4d2a365ebde34e685027578e6728db
+adapters/google-gemma-4-e2b-it-ticket-triage-lora/905e84b50c4d2a365ebde34e685027578e6728db
+models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
 ```
 
-Train the small adapter:
+Generated model weights, adapters, and run logs are ignored by git.
 
-```bash
-scripts/training/train-lora.sh \
-  --max-train-examples 16 \
-  --epochs 1 \
-  --log-every-steps 4
+## Repo Map
+
+```text
+fixtures/ticket-triage/   Small synthetic fixture
+scripts/setup/            Paperspace, CUDA compat, uv, and SGLang setup
+scripts/training/         Model download, adapter training, adapter merge
+scripts/serving/          Native LoRA and merged-model serving checks
+docs/                     Verification runbook and observed run notes
 ```
 
-Install SGLang after training. The training command runs `uv sync`, so install
-the serving package after the adapter is created:
+Useful docs:
 
-```bash
-scripts/setup/install-sglang.sh
-```
-
-Reproduce the native LoRA failure:
-
-```bash
-BATCH_SIZE=8 STARTUP_TIMEOUT_SECONDS=900 \
-  scripts/serving/run-sglang-native-lora-check.sh
-```
-
-Merge the adapter:
-
-```bash
-scripts/training/merge-lora.sh
-```
-
-Reinstall SGLang before serving if the merge command refreshed the uv
-environment:
-
-```bash
-scripts/setup/install-sglang.sh
-```
-
-Check or repair Gemma processor metadata:
-
-```bash
-scripts/serving/check-processor-configs.sh \
-  models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
-
-scripts/serving/repair-processor-configs.sh \
-  models/gemma4-e2b-it/905e84b50c4d2a365ebde34e685027578e6728db \
-  models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
-```
-
-Run the Triton serving check:
-
-```bash
-CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
-  scripts/serving/run-merged-sglang-check.sh \
-  models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
-```
-
-The runner starts SGLang, waits for `/model_info`, calls
-`/v1/chat/completions`, and verifies non-empty assistant message content.
-
-Reproduce the FlashInfer failure:
-
-```bash
-ATTENTION_BACKEND=flashinfer \
-CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
-  scripts/serving/run-merged-sglang-check.sh \
-  models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
-```
-
-The recorded FlashInfer run reached readiness, then failed the chat-completions
-smoke test during paged prefill.
+- [docs/verification.md](docs/verification.md): run the repro in order
+- Reproduce the FlashInfer failure:
+  [docs/verification.md#8-verify-flashinfer-failure](docs/verification.md#8-verify-flashinfer-failure)
+- [docs/observed-results.md](docs/observed-results.md): dated logs and results
+- [scripts/setup/README.md](scripts/setup/README.md): environment setup details
+- [scripts/training/README.md](scripts/training/README.md): artifact build details
+- [scripts/serving/README.md](scripts/serving/README.md): serving command details

@@ -17,6 +17,19 @@ This repository is a focused repro for Gemma 4 E2B serving on SGLang.
 - Do not claim a compatibility path works unless the serving smoke test actually
   ran against that served model.
 
+## Startup
+
+- Read `scripts/setup/README.md` before changing setup or dependency scripts.
+- CUDA 13 on this box depends on the CUDA compatibility libraries because the
+  host driver is otherwise too old.
+- Ensure compatibility is installed first, then source
+  `scripts/setup/gradient-env.sh` so `/usr/local/cuda/compat` is first in
+  `LD_LIBRARY_PATH`.
+- Run `scripts/setup/verify-cuda-env.sh` before any `uv sync`, SGLang install,
+  training, merge, or serving command.
+- Use the existing setup scripts; do not add a new install path unless the
+  existing scripts cannot express the required order.
+
 ## Tooling
 
 - Use `uv` for Python dependency management and command execution.
