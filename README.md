@@ -1,6 +1,10 @@
 # SGLang Gemma 4 Triton Fallback Repro
 
-This repo verifies one focused serving path for `google/gemma-4-E2B-it` on
+TL;DR: on SGLang 0.5.12, serving a LoRA-tuned Gemma 4 E2B requires merging the
+adapter and pinning the Triton attention backend.
+
+This repo verifies one focused serving path for
+[`google/gemma-4-E2B-it`](https://huggingface.co/google/gemma-4-E2B-it) on
 SGLang:
 
 1. native LoRA adapter serving fails for the trained adapter
@@ -22,6 +26,9 @@ serving backend that passes, and FlashInfer remains a reproducible failure path.
 | Native LoRA | Fails before readiness while loading adapter weights |
 | Merged model with Triton | Passes the chat-completions smoke test |
 | Merged model with FlashInfer | Reaches readiness, then fails during paged prefill |
+
+Observed on RTX A6000, driver `550.144.03`, and CUDA driver API `13000`. Other
+hardware may select different FlashInfer kernels.
 
 See [docs/verification.md](docs/verification.md) for the commands that verify
 each row, including timed baseline and post-merge scoring runs.

@@ -110,6 +110,10 @@ NUM_MMA_Q=1 NUM_MMA_D_QK=32 NUM_MMA_D_VO=32 NUM_MMA_KV=1
 NUM_WARPS_Q=4 NUM_WARPS_KV=1
 ```
 
+The `Bidirectional attention for image tokens` warning indicates SGLang's
+FlashInfer path does not implement Gemma 4's vision attention. The subsequent
+paged-prefill crash may be a downstream effect rather than an independent bug.
+
 Conclusion: for this Gemma 4 E2B merged artifact on the recovered CUDA 13
 SGLang 0.5.12 stack, FlashInfer was not a working replacement for Triton
 attention.
