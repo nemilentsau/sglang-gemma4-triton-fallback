@@ -1,6 +1,6 @@
 # Ticket Triage Fixture
 
-This fixture gives the profiles a small task with an easy pass/fail check.
+This fixture gives the repro a small task with an easy pass/fail check.
 
 Each example is a short synthetic support ticket. The expected answer is a compact JSON object with four repo-specific fields:
 
@@ -39,13 +39,7 @@ Expected output:
 - `val.jsonl` contains held-out examples for tuning prompts or training settings.
 - `test.jsonl` contains held-out examples for final smoke checks.
 
-Regenerate the fixture with:
-
-```bash
-uv run python scripts/generate_ticket_triage.py --output-dir fixtures/ticket-triage --seed 17
-```
-
-The generated split is 1000 train examples, 100 validation examples, and 200 test examples.
+The checked-in split is 1000 train examples, 100 validation examples, and 200 test examples.
 The training split is balanced across the 10 ticket scenarios, with 100 examples
 for each expected label combination.
 

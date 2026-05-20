@@ -7,5 +7,5 @@
 - [observed-results.md](observed-results.md): dated environment details, run
   results, and log excerpts from the recorded repro.
 - [run-results/2026-05-20.md](run-results/2026-05-20.md): latest tracked
-  metrics summary from the local run. Raw `score.json` files are tracked under
-  `runs/`; server logs stay ignored.
+  metrics summary from the local run. Raw `score.json` files are intentionally
+  tracked under `runs/`; server logs stay ignored.

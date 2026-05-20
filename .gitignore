@@ -7,6 +7,7 @@ __pycache__/
 
 models/
 adapters/
+# Keep bulky run artifacts and server logs out of git, but track score JSONs.
 runs/**
 !runs/**/
 !runs/**/score.json

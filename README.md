@@ -52,7 +52,9 @@ adapters/google-gemma-4-e2b-it-ticket-triage-lora/905e84b50c4d2a365ebde34e685027
 models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728db
 ```
 
-Generated model weights, adapters, and run logs are ignored by git.
+Generated model weights, adapters, and server logs are ignored by git. Raw
+`score.json` files from recorded scoring runs are intentionally tracked under
+`runs/`.
 
 ## Repo Map
 
