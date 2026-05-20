@@ -70,3 +70,14 @@ def test_readme_centers_backend_fallback_recipe() -> None:
     assert "native LoRA adapter serving fails" in readme
     assert "merge-and-serve is the workaround" in readme
     assert "Reproduce the FlashInfer failure" in readme
+
+
+def test_issue_drafts_have_no_unresolved_placeholders() -> None:
+    for issue_path in (ROOT / "docs/issues").glob("*.md"):
+        text = issue_path.read_text(encoding="utf-8")
+
+        assert "<attach" not in text
+        assert "#<" not in text
+        assert "flashinfer-issue-number" not in text
+        assert "TODO" not in text
+        assert "TBD" not in text

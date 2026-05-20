@@ -9,3 +9,5 @@
 - [run-results/2026-05-20.md](run-results/2026-05-20.md): latest tracked
   metrics summary from the local run. Raw `score.json` files are intentionally
   tracked under `runs/`; server logs stay ignored.
+- [issues/](issues/): ready-to-file SGLang issue drafts for the native LoRA
+  loader failure and FlashInfer request-time failure.
