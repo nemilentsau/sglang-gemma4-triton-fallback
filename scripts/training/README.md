@@ -3,8 +3,9 @@
 These scripts build the local artifacts used by the repro:
 
 1. download the pinned Gemma 4 E2B snapshot
-2. train a tiny synthetic PEFT LoRA adapter
-3. merge the adapter into standalone model weights
+2. optionally score the base model before training
+3. train a tiny synthetic PEFT LoRA adapter
+4. merge the adapter into standalone model weights
 
 Run setup first:
 
@@ -26,6 +27,19 @@ Defaults:
 
 Set `HF_TOKEN` first if the model requires gated access.
 
+## Score The Base Model
+
+The verification runbook scores the pinned base model before training so the
+merged model has a baseline for correctness and timing comparison:
+
+```bash
+CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
+  scripts/serving/run-base-sglang-score.sh
+```
+
+See [../../docs/verification.md](../../docs/verification.md) for the full
+run order and expected output files.
+
 ## Train The Adapter
 
 ```bash
@@ -42,10 +56,14 @@ under:
 adapters/google-gemma-4-e2b-it-ticket-triage-lora/905e84b50c4d2a365ebde34e685027578e6728db
 ```
 
+This is intentionally tiny synthetic training. It exists to create a reproducible
+adapter shape for SGLang serving checks, not to train a useful support model.
+
 ## Merge The Adapter
 
-Install SGLang after training if you plan to run serving checks. The training
-script refreshes the uv environment, so rerun:
+The training script runs `uv sync --extra dev --extra train`, which can remove
+serving-only dependencies. Install SGLang again before native-LoRA checks or
+merged-model serving:
 
 ```bash
 scripts/setup/install-sglang.sh
@@ -64,3 +82,4 @@ models/gemma4-e2b-it-ticket-triage-merged/905e84b50c4d2a365ebde34e685027578e6728
 ```
 
 After merging, run the serving checks in [../serving](../serving/README.md).
+Use the same scoring settings as the base run when comparing timing.

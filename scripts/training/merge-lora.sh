@@ -17,6 +17,7 @@ fi
 
 if [[ ! -d "$ADAPTER_DIR" ]]; then
   echo "Adapter directory not found: $ADAPTER_DIR" >&2
+  echo "Run scripts/training/train-lora.sh first." >&2
   exit 1
 fi
 
