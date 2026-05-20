@@ -31,7 +31,25 @@ Expected:
 
 Set `HF_TOKEN` first if Hugging Face requires gated model access.
 
-## 3. Train The Adapter
+## 3. Score The Base Model
+
+```bash
+CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
+  scripts/serving/run-base-sglang-score.sh
+```
+
+Expected:
+
+- SGLang reaches `/model_info`
+- score JSON is written under `runs/gemma4-base-score-*/score.json`
+- score JSON includes `metrics` and `timing`
+- timing records `max_concurrency`, warmup request count, request throughput,
+  latency percentiles, and completion-token throughput when usage is returned
+
+Defaults are `MAX_CONCURRENCY=8` and `WARMUP_EXAMPLES=8`. Use the same values
+for base and merged runs. For a shorter first pass, add `MAX_EVAL_EXAMPLES=32`.
+
+## 4. Train The Adapter
 
 ```bash
 scripts/training/train-lora.sh \
@@ -51,7 +69,7 @@ Training refreshes the uv environment. Reinstall SGLang before serving checks:
 scripts/setup/install-sglang.sh
 ```
 
-## 4. Verify Native LoRA Failure
+## 5. Verify Native LoRA Failure
 
 ```bash
 BATCH_SIZE=8 STARTUP_TIMEOUT_SECONDS=900 \
@@ -65,7 +83,7 @@ Expected:
 
 This is the failure path kept for future SGLang compatibility checks.
 
-## 5. Merge The Adapter
+## 6. Merge The Adapter
 
 ```bash
 scripts/training/merge-lora.sh
@@ -82,7 +100,7 @@ Reinstall SGLang again if the merge refreshed the uv environment:
 scripts/setup/install-sglang.sh
 ```
 
-## 6. Check Processor Metadata
+## 7. Check Processor Metadata
 
 ```bash
 scripts/serving/check-processor-configs.sh \
@@ -101,7 +119,23 @@ Expected:
 
 - `processor_config.json` is present in the merged model directory
 
-## 7. Verify Triton Pass
+## 8. Score The Merged Model With Triton
+
+```bash
+CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
+  scripts/serving/run-merged-sglang-score.sh
+```
+
+Expected:
+
+- SGLang reaches `/model_info`
+- score JSON is written under `runs/gemma4-merged-score-*/score.json`
+- score JSON includes `metrics` and `timing`
+
+Use the same `MAX_EVAL_EXAMPLES`, `MAX_CONCURRENCY`, and `WARMUP_EXAMPLES`
+values as the base-model run when comparing timing.
+
+## 9. Verify Triton Smoke Test
 
 ```bash
 CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
@@ -123,7 +157,7 @@ The merged serving script defaults to:
 --disable-cuda-graph
 ```
 
-## 8. Verify FlashInfer Failure
+## 10. Verify FlashInfer Failure
 
 ```bash
 ATTENTION_BACKEND=flashinfer \

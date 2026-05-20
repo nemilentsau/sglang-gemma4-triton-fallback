@@ -24,7 +24,7 @@ serving backend that passes, and FlashInfer remains a reproducible failure path.
 | Merged model with FlashInfer | Reaches readiness, then fails during paged prefill |
 
 See [docs/verification.md](docs/verification.md) for the commands that verify
-each row.
+each row, including timed baseline and post-merge scoring runs.
 
 ## Quick Start
 
@@ -68,7 +68,7 @@ Useful docs:
 
 - [docs/verification.md](docs/verification.md): run the repro in order
 - Reproduce the FlashInfer failure:
-  [docs/verification.md#8-verify-flashinfer-failure](docs/verification.md#8-verify-flashinfer-failure)
+  [docs/verification.md#10-verify-flashinfer-failure](docs/verification.md#10-verify-flashinfer-failure)
 - [docs/observed-results.md](docs/observed-results.md): dated logs and results
 - [scripts/setup/README.md](scripts/setup/README.md): environment setup details
 - [scripts/training/README.md](scripts/training/README.md): artifact build details

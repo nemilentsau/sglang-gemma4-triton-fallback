@@ -5,6 +5,8 @@ These scripts reproduce the SGLang behavior this repo is about:
 1. native LoRA serving fails before readiness
 2. merged-model serving passes with Triton attention
 3. the same merged model fails with FlashInfer after readiness
+4. base and merged models can be scored through the working chat-completions
+   endpoint with timing metadata
 
 Run setup and training first:
 
@@ -15,6 +17,29 @@ scripts/training/train-lora.sh --max-train-examples 16 --epochs 1 --log-every-st
 scripts/training/merge-lora.sh
 scripts/setup/install-sglang.sh
 ```
+
+## Timed Scoring
+
+Score the pinned base model before training:
+
+```bash
+CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
+  scripts/serving/run-base-sglang-score.sh
+```
+
+Score the merged model after training and merge:
+
+```bash
+CONTEXT_LENGTH=8192 STARTUP_TIMEOUT_SECONDS=900 \
+  scripts/serving/run-merged-sglang-score.sh
+```
+
+Both commands write `score.json` under `runs/`. The JSON includes exact-match
+metrics, field accuracy, total request time, request count, concurrency,
+request throughput, latency percentiles, and completion-token throughput when
+SGLang returns usage. Defaults are `MAX_CONCURRENCY=8` and `WARMUP_EXAMPLES=8`.
+Use the same `MAX_EVAL_EXAMPLES`, `MAX_CONCURRENCY`, and `WARMUP_EXAMPLES`
+values for base and merged timing comparisons.
 
 ## Native LoRA Failure
 
