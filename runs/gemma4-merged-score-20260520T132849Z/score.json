@@ -1,0 +1,3237 @@
+{
+  "base_url": "http://127.0.0.1:30000",
+  "split": "fixtures/ticket-triage/test.jsonl",
+  "api": "chat",
+  "lora_name": null,
+  "metrics": {
+    "total": 200,
+    "valid_json": 200,
+    "exact_match": 0,
+    "field_matches": 3,
+    "field_total": 800,
+    "exact_match_rate": 0.0,
+    "valid_json_rate": 1.0,
+    "field_accuracy": 0.00375
+  },
+  "timing": {
+    "total_seconds": 33.257280223071575,
+    "request_count": 200,
+    "warmup_request_count": 8,
+    "example_count": 200,
+    "max_concurrency": 8,
+    "avg_request_seconds": 0.16628640111535786,
+    "requests_per_second": 6.01372086528152,
+    "examples_per_second": 6.01372086528152,
+    "request_latency_seconds": {
+      "min": 0.9030672970693558,
+      "p50": 1.2654320041183382,
+      "p95": 1.7368802931159735,
+      "p99": 1.849659652914852,
+      "max": 1.893965766998008
+    },
+    "completion_tokens": 6458,
+    "completion_tokens_per_second": 194.1830467399403
+  },
+  "examples": [
+    {
+      "prompt": "Triage this ticket as JSON: Customer bought the wrong size laptop sleeve and wants a larger one. The customer asks for the case to be routed correctly.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS_EXCHANGE\",\"severity\":\"MEDIUM\",\"macro\":\"SIZE_ISSUE\",\"product_code\":\"LAPTOP_SLEEVE\"}",
+      "parsed": {
+        "route": "RETURNS_EXCHANGE",
+        "severity": "MEDIUM",
+        "macro": "SIZE_ISSUE",
+        "product_code": "LAPTOP_SLEEVE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User missed the trial window and wants another week to test. They want a human review rather than an automated reply.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"TRIAL_EXTENSION_HUMAN_REVIEW\",\"severity\":\"HIGH\",\"macro\":\"TRIAL_EXTENSION_REQUEST\",\"product_code\":\"TRIAL_MGMT\"}",
+      "parsed": {
+        "route": "TRIAL_EXTENSION_HUMAN_REVIEW",
+        "severity": "HIGH",
+        "macro": "TRIAL_EXTENSION_REQUEST",
+        "product_code": "TRIAL_MGMT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer needs instructions for inviting a teammate from mobile. The customer asks for the case to be routed correctly.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"TEAM_ONBOARDING_GUIDE\",\"severity\":\"LOW\",\"macro\":\"INSTRUCTION_REQUEST\",\"product_code\":\"MOBILE_INVITE_GUIDE\"}",
+      "parsed": {
+        "route": "TEAM_ONBOARDING_GUIDE",
+        "severity": "LOW",
+        "macro": "INSTRUCTION_REQUEST",
+        "product_code": "MOBILE_INVITE_GUIDE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. The message includes an account reference but no private details.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_ACCESS_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"DEVICE_CHANGE_BLOCK\",\"product_code\":\"AUTH_001\"}",
+      "parsed": {
+        "route": "ACCOUNT_ACCESS_ISSUE",
+        "severity": "HIGH",
+        "macro": "DEVICE_CHANGE_BLOCK",
+        "product_code": "AUTH_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. The customer says this is blocking their normal workflow.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"L2_Support_Bug_Report\",\"severity\":\"High\",\"macro\":\"Bug_Report\",\"product_code\":\"APP_CORE\"}",
+      "parsed": {
+        "route": "L2_Support_Bug_Report",
+        "severity": "High",
+        "macro": "Bug_Report",
+        "product_code": "APP_CORE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. The customer asks whether support can take action today.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"hardware_replacement_no_refund\",\"severity\":\"medium\",\"macro\":\"hardware_issue_escalation\",\"product_code\":\"CHB-101\"}",
+      "parsed": {
+        "route": "hardware_replacement_no_refund",
+        "severity": "medium",
+        "macro": "hardware_issue_escalation",
+        "product_code": "CHB-101"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer cannot find where saved filters live on the phone. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"SUPPORT_TECH_GUIDANCE\",\"severity\":\"MEDIUM\",\"macro\":\"PRODUCT_HELP\",\"product_code\":\"FILTER_LOCATION_ISSUE\"}",
+      "parsed": {
+        "route": "SUPPORT_TECH_GUIDANCE",
+        "severity": "MEDIUM",
+        "macro": "PRODUCT_HELP",
+        "product_code": "FILTER_LOCATION_ISSUE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer asks where to change invoice profile details. They ask for a concise response from support.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"knowledge_base\",\"severity\":\"low\",\"macro\":\"FAQ\",\"product_code\":\"INV_PROFILE\"}",
+      "parsed": {
+        "route": "knowledge_base",
+        "severity": "low",
+        "macro": "FAQ",
+        "product_code": "INV_PROFILE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. The customer asks whether support can take action today.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"account_access_issue\",\"severity\":\"high\",\"macro\":\"login_block\",\"product_code\":\"AUTH_SVC\"}",
+      "parsed": {
+        "route": "account_access_issue",
+        "severity": "high",
+        "macro": "login_block",
+        "product_code": "AUTH_SVC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_ACCESS_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"DEVICE_CHANGE_BLOCK\",\"product_code\":\"AUTH_SVC\"}",
+      "parsed": {
+        "route": "ACCOUNT_ACCESS_ISSUE",
+        "severity": "HIGH",
+        "macro": "DEVICE_CHANGE_BLOCK",
+        "product_code": "AUTH_SVC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. They mention this happened after trying again this morning.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"hardware_failure_no_refund\",\"severity\":\"medium\",\"macro\":\"hardware_replacement_or_troubleshooting\",\"product_code\":\"CHG-HUB-001\"}",
+      "parsed": {
+        "route": "hardware_failure_no_refund",
+        "severity": "medium",
+        "macro": "hardware_replacement_or_troubleshooting",
+        "product_code": "CHG-HUB-001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RMA_HUB_DEFECT\",\"severity\":\"MEDIUM\",\"macro\":\"HUB_DEFECT_NO_REFUND\",\"product_code\":\"CHG_HUB_001\"}",
+      "parsed": {
+        "route": "RMA_HUB_DEFECT",
+        "severity": "MEDIUM",
+        "macro": "HUB_DEFECT_NO_REFUND",
+        "product_code": "CHG_HUB_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User missed the trial window and wants another week to test. They mention this happened after trying again this morning.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"TRIAL_EXTENSION_REQUEST\",\"severity\":\"LOW\",\"macro\":\"TRIAL_EXTENSION_REQUEST_USER_MISSED_WINDOW\",\"product_code\":\"TRIAL_MGMT\"}",
+      "parsed": {
+        "route": "TRIAL_EXTENSION_REQUEST",
+        "severity": "LOW",
+        "macro": "TRIAL_EXTENSION_REQUEST_USER_MISSED_WINDOW",
+        "product_code": "TRIAL_MGMT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer bought the wrong size laptop sleeve and wants a larger one. The customer says the problem appeared after a recent change.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS\",\"severity\":\"MEDIUM\",\"macro\":\"SIZE_EXCHANGE\",\"product_code\":\"LAPTOP_SLEEVE\"}",
+      "parsed": {
+        "route": "RETURNS",
+        "severity": "MEDIUM",
+        "macro": "SIZE_EXCHANGE",
+        "product_code": "LAPTOP_SLEEVE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer asks where to change invoice profile details. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"FAQ_SEARCH\",\"severity\":\"LOW\",\"macro\":\"GENERAL_INQUIRY\",\"product_code\":\"BILLING\"}",
+      "parsed": {
+        "route": "FAQ_SEARCH",
+        "severity": "LOW",
+        "macro": "GENERAL_INQUIRY",
+        "product_code": "BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer bought the wrong size laptop sleeve and wants a larger one. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS\",\"severity\":\"LOW\",\"macro\":\"SIZE_EXCHANGE\",\"product_code\":\"LAPTOP_SLEEVE\"}",
+      "parsed": {
+        "route": "RETURNS",
+        "severity": "LOW",
+        "macro": "SIZE_EXCHANGE",
+        "product_code": "LAPTOP_SLEEVE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says the annual subscription was billed twice and wants it checked. They ask support to use the standard policy for this case.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Dispute\",\"severity\":\"Medium\",\"macro\":\"Billing_Error_Investigation\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "Billing_Dispute",
+        "severity": "Medium",
+        "macro": "Billing_Error_Investigation",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer bought the wrong size laptop sleeve and wants a larger one. They ask support to use the standard policy for this case.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS\",\"severity\":\"LOW\",\"macro\":\"SIZE_EXCHANGE\",\"product_code\":\"LAPTOP_SLEEVE\"}",
+      "parsed": {
+        "route": "RETURNS",
+        "severity": "LOW",
+        "macro": "SIZE_EXCHANGE",
+        "product_code": "LAPTOP_SLEEVE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. The customer asks for the case to be routed correctly.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"SUPPORT_TIER_2\",\"severity\":\"MEDIUM\",\"macro\":\"CUSTOMER_REQUEST_EXTENSION\",\"product_code\":\"GENERIC\"}",
+      "parsed": {
+        "route": "SUPPORT_TIER_2",
+        "severity": "MEDIUM",
+        "macro": "CUSTOMER_REQUEST_EXTENSION",
+        "product_code": "GENERIC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"TICKET_TRIAGE_REPORT_EXPORT_CRASH\",\"severity\":\"P2\",\"macro\":\"BUG_REPORT_CRASH\",\"product_code\":\"APP_CORE_001\"}",
+      "parsed": {
+        "route": "TICKET_TRIAGE_REPORT_EXPORT_CRASH",
+        "severity": "P2",
+        "macro": "BUG_REPORT_CRASH",
+        "product_code": "APP_CORE_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks when the replacement charging cable will ship. They want a human review rather than an automated reply.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"shipping_inquiry\",\"severity\":\"medium\",\"macro\":\"human_review\",\"product_code\":\"CABLE_REPLACEMENT\"}",
+      "parsed": {
+        "route": "shipping_inquiry",
+        "severity": "medium",
+        "macro": "human_review",
+        "product_code": "CABLE_REPLACEMENT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says the annual subscription was billed twice and wants it checked. The customer asks for the case to be routed correctly.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing/Subscription_Review\",\"severity\":\"High\",\"macro\":\"Billing_Error_Double_Charge\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "Billing/Subscription_Review",
+        "severity": "High",
+        "macro": "Billing_Error_Double_Charge",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. The message includes an account reference but no private details.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RMA_HUB_DEFECT\",\"severity\":\"MEDIUM\",\"macro\":\"HUB_REPLACEMENT_NO_REFUND\",\"product_code\":\"CHG_HUB_001\"}",
+      "parsed": {
+        "route": "RMA_HUB_DEFECT",
+        "severity": "MEDIUM",
+        "macro": "HUB_REPLACEMENT_NO_REFUND",
+        "product_code": "CHG_HUB_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. They ask support to use the standard policy for this case.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RMA_HUB_DEFECT\",\"severity\":\"MEDIUM\",\"macro\":\"STANDARD_POLICY\",\"product_code\":\"CHG_HUB_001\"}",
+      "parsed": {
+        "route": "RMA_HUB_DEFECT",
+        "severity": "MEDIUM",
+        "macro": "STANDARD_POLICY",
+        "product_code": "CHG_HUB_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. The customer says they already checked the status page.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"SUPPORT_TICKET_TRIAGE\",\"severity\":\"LOW\",\"macro\":\"CUSTOMER_REQUEST_EXTENSION\",\"product_code\":\"GENERAL\"}",
+      "parsed": {
+        "route": "SUPPORT_TICKET_TRIAGE",
+        "severity": "LOW",
+        "macro": "CUSTOMER_REQUEST_EXTENSION",
+        "product_code": "GENERAL"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says the annual subscription was billed twice and wants it checked. They want a human review rather than an automated reply.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_dispute\",\"severity\":\"high\",\"macro\":\"manual_review\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "billing_dispute",
+        "severity": "high",
+        "macro": "manual_review",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says mobile changes disappeared after the app tried to sync. The customer asks whether support can take action today.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"mobile_sync_issue\",\"severity\":\"medium\",\"macro\":\"mobile_sync_failure\",\"product_code\":\"APP_SYNC_001\"}",
+      "parsed": {
+        "route": "mobile_sync_issue",
+        "severity": "medium",
+        "macro": "mobile_sync_failure",
+        "product_code": "APP_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer bought the wrong size laptop sleeve and wants a larger one. They want a human review rather than an automated reply.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"human_review\",\"severity\":\"medium\",\"macro\":\"returns_exchange\",\"product_code\":\"LAPTOP_SLEEVE\"}",
+      "parsed": {
+        "route": "human_review",
+        "severity": "medium",
+        "macro": "returns_exchange",
+        "product_code": "LAPTOP_SLEEVE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says the annual subscription was billed twice and wants it checked. They say this is the first time the issue happened.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_dispute\",\"severity\":\"medium\",\"macro\":\"billing_error_duplicate_charge\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "billing_dispute",
+        "severity": "medium",
+        "macro": "billing_error_duplicate_charge",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. They ask support to use the standard policy for this case.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"POLICY_EXCEPTION_REQUEST\",\"severity\":\"MEDIUM\",\"macro\":\"POLICY_EXCEPTION_REQUEST_STANDARD\",\"product_code\":\"TICKET_TRIAGE\"}",
+      "parsed": {
+        "route": "POLICY_EXCEPTION_REQUEST",
+        "severity": "MEDIUM",
+        "macro": "POLICY_EXCEPTION_REQUEST_STANDARD",
+        "product_code": "TICKET_TRIAGE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks for help after being charged twice for the same subscription period. The customer asks for the case to be routed correctly.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing/Subscription Dispute\",\"severity\":\"High\",\"macro\":\"Billing_DoubleCharge\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "Billing/Subscription Dispute",
+        "severity": "High",
+        "macro": "Billing_DoubleCharge",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer bought the wrong size laptop sleeve and wants a larger one. They say the issue is easy to reproduce.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS\",\"severity\":\"LOW\",\"macro\":\"SIZE_EXCHANGE\",\"product_code\":\"LAPTOP_SLEEVE\"}",
+      "parsed": {
+        "route": "RETURNS",
+        "severity": "LOW",
+        "macro": "SIZE_EXCHANGE",
+        "product_code": "LAPTOP_SLEEVE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer can preview the report, but saving the export crashes. The customer asks whether support can take action today.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"L2_Bug_Report\",\"severity\":\"High\",\"macro\":\"Export_Crash_Preview_Success\",\"product_code\":\"[Product_Code_Placeholder]\"}",
+      "parsed": {
+        "route": "L2_Bug_Report",
+        "severity": "High",
+        "macro": "Export_Crash_Preview_Success",
+        "product_code": "[Product_Code_Placeholder]"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer can preview the report, but saving the export crashes. The customer asks for the next step.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"ReportExportCrash\",\"severity\":\"High\",\"macro\":\"BugReport\",\"product_code\":\"[ProductCode]\"}",
+      "parsed": {
+        "route": "ReportExportCrash",
+        "severity": "High",
+        "macro": "BugReport",
+        "product_code": "[ProductCode]"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says mobile changes disappeared after the app tried to sync. They want a human review rather than an automated reply.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L2_Mobile_Sync_Issue\",\"severity\":\"High\",\"macro\":\"Mobile_UI_Sync_Failure\",\"product_code\":\"APP_SYNC_001\"}",
+      "parsed": {
+        "route": "L2_Mobile_Sync_Issue",
+        "severity": "High",
+        "macro": "Mobile_UI_Sync_Failure",
+        "product_code": "APP_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"TECH_SUPPORT_TICKET\",\"severity\":\"MEDIUM\",\"macro\":\"CUSTOMER_REQUEST_EXTENSION\",\"product_code\":\"GENERIC\"}",
+      "parsed": {
+        "route": "TECH_SUPPORT_TICKET",
+        "severity": "MEDIUM",
+        "macro": "CUSTOMER_REQUEST_EXTENSION",
+        "product_code": "GENERIC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs the current carrier status for the laptop stand. They say this is the first time the issue happened.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"shipping_status_inquiry\",\"severity\":\"low\",\"macro\":\"standard_query\",\"product_code\":\"LAPTOP_STAND\"}",
+      "parsed": {
+        "route": "shipping_status_inquiry",
+        "severity": "low",
+        "macro": "standard_query",
+        "product_code": "LAPTOP_STAND"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks when the replacement charging cable will ship. They ask for a concise response from support.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"shipping_inquiry\",\"severity\":\"low\",\"macro\":\"standard_response\",\"product_code\":\"cable_replacement\"}",
+      "parsed": {
+        "route": "shipping_inquiry",
+        "severity": "low",
+        "macro": "standard_response",
+        "product_code": "cable_replacement"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs the current carrier status for the laptop stand. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"SHIP_TRACKING\",\"severity\":\"LOW\",\"macro\":\"TRACK_REQUEST\",\"product_code\":\"LAPTOP_STAND\"}",
+      "parsed": {
+        "route": "SHIP_TRACKING",
+        "severity": "LOW",
+        "macro": "TRACK_REQUEST",
+        "product_code": "LAPTOP_STAND"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer bought the wrong size laptop sleeve and wants a larger one. The customer says this is blocking their normal workflow.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS\",\"severity\":\"MEDIUM\",\"macro\":\"SIZE_EXCHANGE\",\"product_code\":\"LAPTOP_SLEEVE\"}",
+      "parsed": {
+        "route": "RETURNS",
+        "severity": "MEDIUM",
+        "macro": "SIZE_EXCHANGE",
+        "product_code": "LAPTOP_SLEEVE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks when the replacement charging cable will ship. The customer wants the response in plain language.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"shipping_inquiry\",\"severity\":\"low\",\"macro\":\"standard_response\",\"product_code\":\"N/A\"}",
+      "parsed": {
+        "route": "shipping_inquiry",
+        "severity": "low",
+        "macro": "standard_response",
+        "product_code": "N/A"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks when the replacement charging cable will ship. The message includes an account reference but no private details.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"shipping_inquiry\",\"severity\":\"low\",\"macro\":\"standard_query\",\"product_code\":\"N/A\"}",
+      "parsed": {
+        "route": "shipping_inquiry",
+        "severity": "low",
+        "macro": "standard_query",
+        "product_code": "N/A"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. The customer says they already checked the status page.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_ACCESS_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"DEVICE_CHANGE_LOGIN_BLOCK\",\"product_code\":\"AUTH_SVC\"}",
+      "parsed": {
+        "route": "ACCOUNT_ACCESS_ISSUE",
+        "severity": "HIGH",
+        "macro": "DEVICE_CHANGE_LOGIN_BLOCK",
+        "product_code": "AUTH_SVC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. They want a human review rather than an automated reply.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"L2_Support\",\"severity\":\"High\",\"macro\":\"Report_Export_Crash\",\"product_code\":\"APP_CORE_001\"}",
+      "parsed": {
+        "route": "L2_Support",
+        "severity": "High",
+        "macro": "Report_Export_Crash",
+        "product_code": "APP_CORE_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer needs instructions for inviting a teammate from mobile. They mention this happened after trying again this morning.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"INVITE_TEAMS_MOBILE_INSTRUCTIONS\",\"severity\":\"MEDIUM\",\"macro\":\"MOBILE_INVITE_GUIDE\",\"product_code\":\"TEAM_INVITE_MOBILE\"}",
+      "parsed": {
+        "route": "INVITE_TEAMS_MOBILE_INSTRUCTIONS",
+        "severity": "MEDIUM",
+        "macro": "MOBILE_INVITE_GUIDE",
+        "product_code": "TEAM_INVITE_MOBILE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs the current carrier status for the laptop stand. The customer says this is blocking their normal workflow.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"LOGISTICS_INQUIRY\",\"severity\":\"HIGH\",\"macro\":\"CUSTOMER_BLOCKER\",\"product_code\":\"LAPTOP_STAND\"}",
+      "parsed": {
+        "route": "LOGISTICS_INQUIRY",
+        "severity": "HIGH",
+        "macro": "CUSTOMER_BLOCKER",
+        "product_code": "LAPTOP_STAND"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says their account recovery email goes to an old inbox they cannot open. The message includes an account reference but no private details.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_RECOVERY_EMAIL_ISSUE\",\"severity\":\"MEDIUM\",\"macro\":\"EMAIL_RECOVERY_ISSUE\",\"product_code\":\"AUTH_001\"}",
+      "parsed": {
+        "route": "ACCOUNT_RECOVERY_EMAIL_ISSUE",
+        "severity": "MEDIUM",
+        "macro": "EMAIL_RECOVERY_ISSUE",
+        "product_code": "AUTH_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says their account recovery email goes to an old inbox they cannot open. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_RECOVERY_EMAIL_ISSUE\",\"severity\":\"MEDIUM\",\"macro\":\"EMAIL_ACCESS_ISSUE\",\"product_code\":\"AUTH_001\"}",
+      "parsed": {
+        "route": "ACCOUNT_RECOVERY_EMAIL_ISSUE",
+        "severity": "MEDIUM",
+        "macro": "EMAIL_ACCESS_ISSUE",
+        "product_code": "AUTH_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks for help after being charged twice for the same subscription period. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing/Subscription_Dispute\",\"severity\":\"High\",\"macro\":\"Billing_Double_Charge\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "Billing/Subscription_Dispute",
+        "severity": "High",
+        "macro": "Billing_Double_Charge",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User needs the tax address corrected before the next billing cycle. They ask for a concise response from support.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Address_Correction\",\"severity\":\"Medium\",\"macro\":\"Address_Update_Request\",\"product_code\":\"BILLING_001\"}",
+      "parsed": {
+        "route": "Billing_Address_Correction",
+        "severity": "Medium",
+        "macro": "Address_Update_Request",
+        "product_code": "BILLING_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says mobile changes disappeared after the app tried to sync. They ask for confirmation after the case is routed.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"Mobile Sync Issue\",\"severity\":\"Medium\",\"macro\":\"MobileAppSync\",\"product_code\":\"APP_SYNC_001\"}",
+      "parsed": {
+        "route": "Mobile Sync Issue",
+        "severity": "Medium",
+        "macro": "MobileAppSync",
+        "product_code": "APP_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer cannot find where saved filters live on the phone. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L1_Support\",\"severity\":\"Medium\",\"macro\":\"Filter_Location_Inquiry\",\"product_code\":\"MOBILE_OS\"}",
+      "parsed": {
+        "route": "L1_Support",
+        "severity": "Medium",
+        "macro": "Filter_Location_Inquiry",
+        "product_code": "MOBILE_OS"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User missed the trial window and wants another week to test. The message includes an account reference but no private details.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"TRIAL_EXTENSION_REQUEST\",\"severity\":\"LOW\",\"macro\":\"ACCOUNT_REFERENCE_ONLY\",\"product_code\":\"TRIAL_MGMT\"}",
+      "parsed": {
+        "route": "TRIAL_EXTENSION_REQUEST",
+        "severity": "LOW",
+        "macro": "ACCOUNT_REFERENCE_ONLY",
+        "product_code": "TRIAL_MGMT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says two devices now show different task lists. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L2_Support\",\"severity\":\"Medium\",\"macro\":\"Workspace_Sync_Issue\",\"product_code\":\"TASK_SYNC_001\"}",
+      "parsed": {
+        "route": "L2_Support",
+        "severity": "Medium",
+        "macro": "Workspace_Sync_Issue",
+        "product_code": "TASK_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs to exchange a narrow monitor arm for the wider version. The customer wants the response in plain language.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS_EXCHANGE\",\"severity\":\"MEDIUM\",\"macro\":\"MONITOR_ARM_EXCHANGE\",\"product_code\":\"ARM-WIDER-V2\"}",
+      "parsed": {
+        "route": "RETURNS_EXCHANGE",
+        "severity": "MEDIUM",
+        "macro": "MONITOR_ARM_EXCHANGE",
+        "product_code": "ARM-WIDER-V2"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User missed the trial window and wants another week to test. The customer asks for the next step.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"SALES_SUPPORT\",\"severity\":\"MEDIUM\",\"macro\":\"TRIAL_EXTENSION_REQUEST\",\"product_code\":\"GENERIC\"}",
+      "parsed": {
+        "route": "SALES_SUPPORT",
+        "severity": "MEDIUM",
+        "macro": "TRIAL_EXTENSION_REQUEST",
+        "product_code": "GENERIC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer cannot find where saved filters live on the phone. The customer asks for the next step.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"KB_SEARCH_GUIDE\",\"severity\":\"low\",\"macro\":\"Triage_Filter_Location\",\"product_code\":\"MOBILE_APP\"}",
+      "parsed": {
+        "route": "KB_SEARCH_GUIDE",
+        "severity": "low",
+        "macro": "Triage_Filter_Location",
+        "product_code": "MOBILE_APP"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer asks where to change invoice profile details. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_support\",\"severity\":\"medium\",\"macro\":\"invoice_profile_update\",\"product_code\":\"INV_PROFILE\"}",
+      "parsed": {
+        "route": "billing_support",
+        "severity": "medium",
+        "macro": "invoice_profile_update",
+        "product_code": "INV_PROFILE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"L1_Support\",\"severity\":\"High\",\"macro\":\"Bug_Report_Data_Loss\",\"product_code\":\"APP_CORE_001\"}",
+      "parsed": {
+        "route": "L1_Support",
+        "severity": "High",
+        "macro": "Bug_Report_Data_Loss",
+        "product_code": "APP_CORE_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User reports a cracked screen protector and asks for a fresh unit. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"Hardware_Replacement\",\"severity\":\"Medium\",\"macro\":\"Screen_Protector_Replacement\",\"product_code\":\"SP-001\"}",
+      "parsed": {
+        "route": "Hardware_Replacement",
+        "severity": "Medium",
+        "macro": "Screen_Protector_Replacement",
+        "product_code": "SP-001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer cannot find where saved filters live on the phone. They note that no payment details or private data are included.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L1_Support\",\"severity\":\"Medium\",\"macro\":\"Mobile_UI_Help\",\"product_code\":\"APP_UI_001\"}",
+      "parsed": {
+        "route": "L1_Support",
+        "severity": "Medium",
+        "macro": "Mobile_UI_Help",
+        "product_code": "APP_UI_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User reports a cracked screen protector and asks for a fresh unit. They ask for confirmation after the case is routed.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"Hardware_Replacement\",\"severity\":\"Medium\",\"macro\":\"Screen_Protector_Replacement\",\"product_code\":\"SP-001\"}",
+      "parsed": {
+        "route": "Hardware_Replacement",
+        "severity": "Medium",
+        "macro": "Screen_Protector_Replacement",
+        "product_code": "SP-001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says the annual subscription was billed twice and wants it checked. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing/Subscription_Dispute\",\"severity\":\"High\",\"macro\":\"Billing_Error_Investigation\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "Billing/Subscription_Dispute",
+        "severity": "High",
+        "macro": "Billing_Error_Investigation",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. They say this is the first time the issue happened.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"support_escalation\",\"severity\":\"medium\",\"macro\":\"billing_extension_request\",\"product_code\":\"SVC_BILLING_001\"}",
+      "parsed": {
+        "route": "support_escalation",
+        "severity": "medium",
+        "macro": "billing_extension_request",
+        "product_code": "SVC_BILLING_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. They mention this happened after trying again this morning.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"TICKET_TRIAGE\",\"severity\":\"MEDIUM\",\"macro\":\"CUSTOMER_REQUEST_EXTENSION\",\"product_code\":\"SERVICE_MGMT\"}",
+      "parsed": {
+        "route": "TICKET_TRIAGE",
+        "severity": "MEDIUM",
+        "macro": "CUSTOMER_REQUEST_EXTENSION",
+        "product_code": "SERVICE_MGMT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says two devices now show different task lists. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L2_Support\",\"severity\":\"Medium\",\"macro\":\"Troubleshooting_Sync_Issues\",\"product_code\":\"DEVICE_SYNC_001\"}",
+      "parsed": {
+        "route": "L2_Support",
+        "severity": "Medium",
+        "macro": "Troubleshooting_Sync_Issues",
+        "product_code": "DEVICE_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer bought the wrong size laptop sleeve and wants a larger one. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS_EXCHANGE\",\"severity\":\"MEDIUM\",\"macro\":\"SIZE_EXCHANGE\",\"product_code\":\"LAPTOP_SLEEVE\"}",
+      "parsed": {
+        "route": "RETURNS_EXCHANGE",
+        "severity": "MEDIUM",
+        "macro": "SIZE_EXCHANGE",
+        "product_code": "LAPTOP_SLEEVE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer needs instructions for inviting a teammate from mobile. The customer says this is blocking their normal workflow.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"TECH_SUPPORT_MOBILE_INSTRUCTIONS\",\"severity\":\"MEDIUM\",\"macro\":\"MOBILE_GUIDE_INVITE_TEAMS\",\"product_code\":\"TEAM_INVITE_MOBILE\"}",
+      "parsed": {
+        "route": "TECH_SUPPORT_MOBILE_INSTRUCTIONS",
+        "severity": "MEDIUM",
+        "macro": "MOBILE_GUIDE_INVITE_TEAMS",
+        "product_code": "TEAM_INVITE_MOBILE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs the current carrier status for the laptop stand. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"LOGISTICS_INQUIRY\",\"severity\":\"LOW\",\"macro\":\"CUSTOMER_INFO_REQUEST\",\"product_code\":\"LAPTOP_STAND\"}",
+      "parsed": {
+        "route": "LOGISTICS_INQUIRY",
+        "severity": "LOW",
+        "macro": "CUSTOMER_INFO_REQUEST",
+        "product_code": "LAPTOP_STAND"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User reports a cracked screen protector and asks for a fresh unit. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"Hardware_Replacement\",\"severity\":\"Medium\",\"macro\":\"Screen_Protector_Replacement\",\"product_code\":\"SP-001\"}",
+      "parsed": {
+        "route": "Hardware_Replacement",
+        "severity": "Medium",
+        "macro": "Screen_Protector_Replacement",
+        "product_code": "SP-001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks when the replacement charging cable will ship. The customer says they already checked the status page.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"shipping_status_inquiry\",\"severity\":\"low\",\"macro\":\"check_shipping_status\",\"product_code\":\"CABLE_REPLACEMENT\"}",
+      "parsed": {
+        "route": "shipping_status_inquiry",
+        "severity": "low",
+        "macro": "check_shipping_status",
+        "product_code": "CABLE_REPLACEMENT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. The customer says they already checked the status page.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RMA_HUB_DEFECT\",\"severity\":\"MEDIUM\",\"macro\":\"HUB_DEFECT_NO_REFUND\",\"product_code\":\"CHG_HUB_001\"}",
+      "parsed": {
+        "route": "RMA_HUB_DEFECT",
+        "severity": "MEDIUM",
+        "macro": "HUB_DEFECT_NO_REFUND",
+        "product_code": "CHG_HUB_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User needs the tax address corrected before the next billing cycle. They want a human review rather than an automated reply.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Address_Correction\",\"severity\":\"Medium\",\"macro\":\"Manual_Review_Required\",\"product_code\":\"BILL_ADDR_CORR\"}",
+      "parsed": {
+        "route": "Billing_Address_Correction",
+        "severity": "Medium",
+        "macro": "Manual_Review_Required",
+        "product_code": "BILL_ADDR_CORR"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks for help after being charged twice for the same subscription period. The customer asks whether support can take action today.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing/Subscription_Dispute\",\"severity\":\"High\",\"macro\":\"Billing_Double_Charge\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "Billing/Subscription_Dispute",
+        "severity": "High",
+        "macro": "Billing_Double_Charge",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer cannot find where saved filters live on the phone. The customer asks whether support can take action today.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L1_Support\",\"severity\":\"Medium\",\"macro\":\"Product_Support\",\"product_code\":\"Filter_Location_Inquiry\"}",
+      "parsed": {
+        "route": "L1_Support",
+        "severity": "Medium",
+        "macro": "Product_Support",
+        "product_code": "Filter_Location_Inquiry"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User reports a cracked screen protector and asks for a fresh unit. The customer asks for the next step.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURN_FOR_REPLACEMENT\",\"severity\":\"MEDIUM\",\"macro\":\"SCREEN_PROTECTOR_REPLACEMENT\",\"product_code\":\"SP-001\"}",
+      "parsed": {
+        "route": "RETURN_FOR_REPLACEMENT",
+        "severity": "MEDIUM",
+        "macro": "SCREEN_PROTECTOR_REPLACEMENT",
+        "product_code": "SP-001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says the annual subscription was billed twice and wants it checked. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_dispute\",\"severity\":\"medium\",\"macro\":\"subscription_billing_error\",\"product_code\":\"BILL-001\"}",
+      "parsed": {
+        "route": "billing_dispute",
+        "severity": "medium",
+        "macro": "subscription_billing_error",
+        "product_code": "BILL-001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks for help after being charged twice for the same subscription period. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Dispute\",\"severity\":\"Medium\",\"macro\":\"Billing_Double_Charge\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "Billing_Dispute",
+        "severity": "Medium",
+        "macro": "Billing_Double_Charge",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. They ask for a concise response from support.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RMA_INITIATE\",\"severity\":\"MEDIUM\",\"macro\":\"PRODUCT_DEFECT_NO_REFUND\",\"product_code\":\"CHG_HUB_001\"}",
+      "parsed": {
+        "route": "RMA_INITIATE",
+        "severity": "MEDIUM",
+        "macro": "PRODUCT_DEFECT_NO_REFUND",
+        "product_code": "CHG_HUB_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says mobile changes disappeared after the app tried to sync. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"mobile_sync_issue\",\"severity\":\"medium\",\"macro\":\"mobile_ui_sync_failure\",\"product_code\":\"APP_SYNC_001\"}",
+      "parsed": {
+        "route": "mobile_sync_issue",
+        "severity": "medium",
+        "macro": "mobile_ui_sync_failure",
+        "product_code": "APP_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks when the replacement charging cable will ship. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"shipping_inquiry\",\"severity\":\"low\",\"macro\":\"shipping_status_check\",\"product_code\":\"cable\"}",
+      "parsed": {
+        "route": "shipping_inquiry",
+        "severity": "low",
+        "macro": "shipping_status_check",
+        "product_code": "cable"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. The customer asks for the next step.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_ACCESS_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"DEVICE_CHANGE_LOGIN_BLOCK\",\"product_code\":\"AUTH_SVC\"}",
+      "parsed": {
+        "route": "ACCOUNT_ACCESS_ISSUE",
+        "severity": "HIGH",
+        "macro": "DEVICE_CHANGE_LOGIN_BLOCK",
+        "product_code": "AUTH_SVC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks when the replacement charging cable will ship. The customer says the problem appeared after a recent change.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"shipping_inquiry\",\"severity\":\"low\",\"macro\":\"customer_query\",\"product_code\":\"cable_replacement\"}",
+      "parsed": {
+        "route": "shipping_inquiry",
+        "severity": "low",
+        "macro": "customer_query",
+        "product_code": "cable_replacement"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says two devices now show different task lists. The customer says the problem appeared after a recent change.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L2_Support\",\"severity\":\"Medium\",\"macro\":\"Device_Sync_Issue\",\"product_code\":\"DS-404\"}",
+      "parsed": {
+        "route": "L2_Support",
+        "severity": "Medium",
+        "macro": "Device_Sync_Issue",
+        "product_code": "DS-404"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. They note that no payment details or private data are included.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_extension_request\",\"severity\":\"low\",\"macro\":\"billing_support\",\"product_code\":\"BILLING\"}",
+      "parsed": {
+        "route": "billing_extension_request",
+        "severity": "low",
+        "macro": "billing_support",
+        "product_code": "BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. They ask for confirmation after the case is routed.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"SUPPORT_AGENT_REVIEW\",\"severity\":\"MEDIUM\",\"macro\":\"TICKET_REVIEW\",\"product_code\":\"GENERAL\"}",
+      "parsed": {
+        "route": "SUPPORT_AGENT_REVIEW",
+        "severity": "MEDIUM",
+        "macro": "TICKET_REVIEW",
+        "product_code": "GENERAL"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks for help after being charged twice for the same subscription period. They want a human review rather than an automated reply.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_dispute\",\"severity\":\"high\",\"macro\":\"escalate_to_human\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "billing_dispute",
+        "severity": "high",
+        "macro": "escalate_to_human",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"TECH_SUPPORT_HARDWARE_ISSUE\",\"severity\":\"MEDIUM\",\"macro\":\"HW_DEFECT_SINGLE_WORKSPACE\",\"product_code\":\"CHG_HUB_001\"}",
+      "parsed": {
+        "route": "TECH_SUPPORT_HARDWARE_ISSUE",
+        "severity": "MEDIUM",
+        "macro": "HW_DEFECT_SINGLE_WORKSPACE",
+        "product_code": "CHG_HUB_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RMA_NO_REFUND\",\"severity\":\"MEDIUM\",\"macro\":\"HARDWARE_ISSUE\",\"product_code\":\"CHG_HUB_001\"}",
+      "parsed": {
+        "route": "RMA_NO_REFUND",
+        "severity": "MEDIUM",
+        "macro": "HARDWARE_ISSUE",
+        "product_code": "CHG_HUB_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks when the replacement charging cable will ship. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"shipping_inquiry\",\"severity\":\"low\",\"macro\":\"standard_response\",\"product_code\":\"N/A\"}",
+      "parsed": {
+        "route": "shipping_inquiry",
+        "severity": "low",
+        "macro": "standard_response",
+        "product_code": "N/A"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer can preview the report, but saving the export crashes. They say the issue is easy to reproduce.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"report_export_crash\",\"severity\":\"high\",\"macro\":\"export_failure\",\"product_code\":\"REPORTING_SERVICE\"}",
+      "parsed": {
+        "route": "report_export_crash",
+        "severity": "high",
+        "macro": "export_failure",
+        "product_code": "REPORTING_SERVICE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer needs instructions for inviting a teammate from mobile. The customer asks for the next step.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"TECH_SUPPORT_GUIDE\",\"severity\":\"MEDIUM\",\"macro\":\"INSTRUCTION_REQUEST\",\"product_code\":\"MOBILE_INVITE_GUIDE\"}",
+      "parsed": {
+        "route": "TECH_SUPPORT_GUIDE",
+        "severity": "MEDIUM",
+        "macro": "INSTRUCTION_REQUEST",
+        "product_code": "MOBILE_INVITE_GUIDE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. The customer asks for the next step.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"L2_Support\",\"severity\":\"High\",\"macro\":\"Bug_Report_Data_Loss\",\"product_code\":\"APP_CORE_001\"}",
+      "parsed": {
+        "route": "L2_Support",
+        "severity": "High",
+        "macro": "Bug_Report_Data_Loss",
+        "product_code": "APP_CORE_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks for help after being charged twice for the same subscription period. They note that no payment details or private data are included.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Dispute\",\"severity\":\"Medium\",\"macro\":\"Billing_Error_Double_Charge\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "Billing_Dispute",
+        "severity": "Medium",
+        "macro": "Billing_Error_Double_Charge",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. The customer wants the response in plain language.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"SUPPORT_REQUEST\",\"severity\":\"MEDIUM\",\"macro\":\"TICKET_TRIAGE\",\"product_code\":\"GENERIC\"}",
+      "parsed": {
+        "route": "SUPPORT_REQUEST",
+        "severity": "MEDIUM",
+        "macro": "TICKET_TRIAGE",
+        "product_code": "GENERIC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says mobile changes disappeared after the app tried to sync. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"mobile_sync_issue\",\"severity\":\"medium\",\"macro\":\"mobile_app_sync_failure\",\"product_code\":\"APP_SYNC_001\"}",
+      "parsed": {
+        "route": "mobile_sync_issue",
+        "severity": "medium",
+        "macro": "mobile_app_sync_failure",
+        "product_code": "APP_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer needs instructions for inviting a teammate from mobile. The message includes an account reference but no private details.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"TECH_SUPPORT_GUIDE\",\"severity\":\"LOW\",\"macro\":\"INSTRUCTION_REQUEST\",\"product_code\":\"MOBILE_INVITE\"}",
+      "parsed": {
+        "route": "TECH_SUPPORT_GUIDE",
+        "severity": "LOW",
+        "macro": "INSTRUCTION_REQUEST",
+        "product_code": "MOBILE_INVITE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. They say the issue is easy to reproduce.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"BUG\",\"severity\":\"P2\",\"macro\":\"ReportExportFailure\",\"product_code\":\"APP_CORE\"}",
+      "parsed": {
+        "route": "BUG",
+        "severity": "P2",
+        "macro": "ReportExportFailure",
+        "product_code": "APP_CORE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer can preview the report, but saving the export crashes. They ask support to use the standard policy for this case.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"L2_Support\",\"severity\":\"High\",\"macro\":\"Export_Crash_Preview_Success\",\"product_code\":\"[Product_Code_Placeholder]\"}",
+      "parsed": {
+        "route": "L2_Support",
+        "severity": "High",
+        "macro": "Export_Crash_Preview_Success",
+        "product_code": "[Product_Code_Placeholder]"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says two devices now show different task lists. They ask for confirmation after the case is routed.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L2_Support\",\"severity\":\"Medium\",\"macro\":\"Device_Sync_Issue\",\"product_code\":\"DSYNC001\"}",
+      "parsed": {
+        "route": "L2_Support",
+        "severity": "Medium",
+        "macro": "Device_Sync_Issue",
+        "product_code": "DSYNC001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User missed the trial window and wants another week to test. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"TRIAL_EXTENSION_NO_REFUND\",\"severity\":\"MEDIUM\",\"macro\":\"TRIAL_EXTENSION_NO_REFUND\",\"product_code\":\"SUBSCRIPTION_MGMT\"}",
+      "parsed": {
+        "route": "TRIAL_EXTENSION_NO_REFUND",
+        "severity": "MEDIUM",
+        "macro": "TRIAL_EXTENSION_NO_REFUND",
+        "product_code": "SUBSCRIPTION_MGMT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says two devices now show different task lists. They note that no payment details or private data are included.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"INCIDENT_TICKET_TRIAGE\",\"severity\":\"MEDIUM\",\"macro\":\"USER_REPORT_DATA_MISMATCH\",\"product_code\":\"SEC_001\"}",
+      "parsed": {
+        "route": "INCIDENT_TICKET_TRIAGE",
+        "severity": "MEDIUM",
+        "macro": "USER_REPORT_DATA_MISMATCH",
+        "product_code": "SEC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says mobile changes disappeared after the app tried to sync. They note that no payment details or private data are included.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"mobile_sync_data_loss\",\"severity\":\"high\",\"macro\":\"data_integrity_issue\",\"product_code\":\"APP_SYNC_001\"}",
+      "parsed": {
+        "route": "mobile_sync_data_loss",
+        "severity": "high",
+        "macro": "data_integrity_issue",
+        "product_code": "APP_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks for help after being charged twice for the same subscription period. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Dispute_No_Refund\",\"severity\":\"Medium\",\"macro\":\"Subscription_Double_Charge\",\"product_code\":\"BILLING_001\"}",
+      "parsed": {
+        "route": "Billing_Dispute_No_Refund",
+        "severity": "Medium",
+        "macro": "Subscription_Double_Charge",
+        "product_code": "BILLING_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs the current carrier status for the laptop stand. The customer asks for the next step.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"ORDER_STATUS_CHECK\",\"severity\":\"MEDIUM\",\"macro\":\"CUSTOMER_INQUIRY\",\"product_code\":\"LAPTOP_STAND\"}",
+      "parsed": {
+        "route": "ORDER_STATUS_CHECK",
+        "severity": "MEDIUM",
+        "macro": "CUSTOMER_INQUIRY",
+        "product_code": "LAPTOP_STAND"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. They say this is the first time the issue happened.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"ReportExportFailure\",\"severity\":\"Medium\",\"macro\":\"BugReport\",\"product_code\":\"APP_BUG_001\"}",
+      "parsed": {
+        "route": "ReportExportFailure",
+        "severity": "Medium",
+        "macro": "BugReport",
+        "product_code": "APP_BUG_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"ReportExportFailure\",\"severity\":\"High\",\"macro\":\"ReportExport\",\"product_code\":\"APP_BUG_001\"}",
+      "parsed": {
+        "route": "ReportExportFailure",
+        "severity": "High",
+        "macro": "ReportExport",
+        "product_code": "APP_BUG_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs to exchange a narrow monitor arm for the wider version. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"Hardware_Exchange_Support\",\"severity\":\"Medium\",\"macro\":\"Monitor_Arm_Exchange\",\"product_code\":\"MONITOR_ARM_V2\"}",
+      "parsed": {
+        "route": "Hardware_Exchange_Support",
+        "severity": "Medium",
+        "macro": "Monitor_Arm_Exchange",
+        "product_code": "MONITOR_ARM_V2"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer needs instructions for inviting a teammate from mobile. The customer says they already checked the status page.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"TECH_SUPPORT_GUIDE\",\"severity\":\"LOW\",\"macro\":\"INSTRUCTION_REQUEST\",\"product_code\":\"MOBILE_INVITE_GUIDE\"}",
+      "parsed": {
+        "route": "TECH_SUPPORT_GUIDE",
+        "severity": "LOW",
+        "macro": "INSTRUCTION_REQUEST",
+        "product_code": "MOBILE_INVITE_GUIDE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs the current carrier status for the laptop stand. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"TECH_SUPPORT_L1\",\"severity\":\"MEDIUM\",\"macro\":\"PRODUCT_STATUS_INQUIRY\",\"product_code\":\"LAPTOP_STAND\"}",
+      "parsed": {
+        "route": "TECH_SUPPORT_L1",
+        "severity": "MEDIUM",
+        "macro": "PRODUCT_STATUS_INQUIRY",
+        "product_code": "LAPTOP_STAND"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer can preview the report, but saving the export crashes. They ask for confirmation after the case is routed.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"Report Export Crash\",\"severity\":\"High\",\"macro\":\"Export Functionality\",\"product_code\":\"REPORT_EXPORT_CRASH\"}",
+      "parsed": {
+        "route": "Report Export Crash",
+        "severity": "High",
+        "macro": "Export Functionality",
+        "product_code": "REPORT_EXPORT_CRASH"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs to exchange a narrow monitor arm for the wider version. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"HW_EXCHANGE_RETURN\",\"severity\":\"MEDIUM\",\"macro\":\"MONITOR_ARM_EXCHANGE\",\"product_code\":\"ARM_WIDER_V1\"}",
+      "parsed": {
+        "route": "HW_EXCHANGE_RETURN",
+        "severity": "MEDIUM",
+        "macro": "MONITOR_ARM_EXCHANGE",
+        "product_code": "ARM_WIDER_V1"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs to exchange a narrow monitor arm for the wider version. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"EXCHANGE_ARM_VERSION\",\"severity\":\"MEDIUM\",\"macro\":\"ARM_EXCHANGE_NO_REFUND\",\"product_code\":\"MONITOR_ARM\"}",
+      "parsed": {
+        "route": "EXCHANGE_ARM_VERSION",
+        "severity": "MEDIUM",
+        "macro": "ARM_EXCHANGE_NO_REFUND",
+        "product_code": "MONITOR_ARM"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer asks where to change invoice profile details. The customer asks for the case to be routed correctly.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing/Invoicing Support\",\"severity\":\"Medium\",\"macro\":\"Invoice Profile Management\",\"product_code\":\"INV\"}",
+      "parsed": {
+        "route": "Billing/Invoicing Support",
+        "severity": "Medium",
+        "macro": "Invoice Profile Management",
+        "product_code": "INV"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer cannot find where saved filters live on the phone. They ask for a concise response from support.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"KB_SEARCH_FILTER_LOCATION\",\"severity\":\"low\",\"macro\":\"FAQ_SEARCH\",\"product_code\":\"MOBILE_APP\"}",
+      "parsed": {
+        "route": "KB_SEARCH_FILTER_LOCATION",
+        "severity": "low",
+        "macro": "FAQ_SEARCH",
+        "product_code": "MOBILE_APP"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks when the replacement charging cable will ship. They say this is the first time the issue happened.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"shipping_inquiry\",\"severity\":\"low\",\"macro\":\"standard_query\",\"product_code\":\"N/A\"}",
+      "parsed": {
+        "route": "shipping_inquiry",
+        "severity": "low",
+        "macro": "standard_query",
+        "product_code": "N/A"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. The customer asks whether support can take action today.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"L2_Bug_Report\",\"severity\":\"High\",\"macro\":\"Bug_Report\",\"product_code\":\"APP_EXPORT_FAIL\"}",
+      "parsed": {
+        "route": "L2_Bug_Report",
+        "severity": "High",
+        "macro": "Bug_Report",
+        "product_code": "APP_EXPORT_FAIL"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User missed the trial window and wants another week to test. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"TRIAL_EXTENSION_REQUEST\",\"severity\":\"LOW\",\"macro\":\"CUSTOMER_REQUEST_EXTENSION\",\"product_code\":\"TRIAL_MGMT\"}",
+      "parsed": {
+        "route": "TRIAL_EXTENSION_REQUEST",
+        "severity": "LOW",
+        "macro": "CUSTOMER_REQUEST_EXTENSION",
+        "product_code": "TRIAL_MGMT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs the current carrier status for the laptop stand. The message includes an account reference but no private details.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"SHIPMENT_STATUS_CHECK\",\"severity\":\"LOW\",\"macro\":\"STANDARD_QUERY\",\"product_code\":\"LAPTOP_STAND\"}",
+      "parsed": {
+        "route": "SHIPMENT_STATUS_CHECK",
+        "severity": "LOW",
+        "macro": "STANDARD_QUERY",
+        "product_code": "LAPTOP_STAND"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User missed the trial window and wants another week to test. They ask for confirmation after the case is routed.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"TRIAL_EXTENSION_REQUEST\",\"severity\":\"LOW\",\"macro\":\"TRIAL_EXTENSION_REQUEST\",\"product_code\":\"TRIAL_MGMT\"}",
+      "parsed": {
+        "route": "TRIAL_EXTENSION_REQUEST",
+        "severity": "LOW",
+        "macro": "TRIAL_EXTENSION_REQUEST",
+        "product_code": "TRIAL_MGMT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs the current carrier status for the laptop stand. They mention this happened after trying again this morning.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"LOGISTICS_INQUIRY\",\"severity\":\"LOW\",\"macro\":\"CUSTOMER_STATUS_CHECK\",\"product_code\":\"LAPTOP_STAND\"}",
+      "parsed": {
+        "route": "LOGISTICS_INQUIRY",
+        "severity": "LOW",
+        "macro": "CUSTOMER_STATUS_CHECK",
+        "product_code": "LAPTOP_STAND"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says the annual subscription was billed twice and wants it checked. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_dispute\",\"severity\":\"medium\",\"macro\":\"billing_error_investigation\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "billing_dispute",
+        "severity": "medium",
+        "macro": "billing_error_investigation",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer asks where to change invoice profile details. The customer says the problem appeared after a recent change.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_support\",\"severity\":\"medium\",\"macro\":\"invoice_profile_update\",\"product_code\":\"INV_PROFILE_001\"}",
+      "parsed": {
+        "route": "billing_support",
+        "severity": "medium",
+        "macro": "invoice_profile_update",
+        "product_code": "INV_PROFILE_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer can preview the report, but saving the export crashes. The customer says this is blocking their normal workflow.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"BUG\",\"severity\":\"High\",\"macro\":\"Export/Save Failure\",\"product_code\":\"[Product_Code_Placeholder]\"}",
+      "parsed": {
+        "route": "BUG",
+        "severity": "High",
+        "macro": "Export/Save Failure",
+        "product_code": "[Product_Code_Placeholder]"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs to exchange a narrow monitor arm for the wider version. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"Hardware_Exchange_Request\",\"severity\":\"Medium\",\"macro\":\"Monitor_Arm_Exchange\",\"product_code\":\"MONITOR_ARM_V2\"}",
+      "parsed": {
+        "route": "Hardware_Exchange_Request",
+        "severity": "Medium",
+        "macro": "Monitor_Arm_Exchange",
+        "product_code": "MONITOR_ARM_V2"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer needs instructions for inviting a teammate from mobile. They note that no payment details or private data are included.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"INSTRUCTION_REQUEST\",\"severity\":\"LOW\",\"macro\":\"GENERAL_SUPPORT\",\"product_code\":\"MOBILE_INVITE_GUIDE\"}",
+      "parsed": {
+        "route": "INSTRUCTION_REQUEST",
+        "severity": "LOW",
+        "macro": "GENERAL_SUPPORT",
+        "product_code": "MOBILE_INVITE_GUIDE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. The message includes an account reference but no private details.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"SUPPORT_TICKET_TRIAGE\",\"severity\":\"LOW\",\"macro\":\"ACCOUNT_REFERENCE_ONLY\",\"product_code\":\"GENERAL\"}",
+      "parsed": {
+        "route": "SUPPORT_TICKET_TRIAGE",
+        "severity": "LOW",
+        "macro": "ACCOUNT_REFERENCE_ONLY",
+        "product_code": "GENERAL"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks for help after being charged twice for the same subscription period. They ask for a concise response from support.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Dispute\",\"severity\":\"High\",\"macro\":\"Billing_Double_Charge\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "Billing_Dispute",
+        "severity": "High",
+        "macro": "Billing_Double_Charge",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says the annual subscription was billed twice and wants it checked. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Dispute\",\"severity\":\"High\",\"macro\":\"Subscription_Billing_Error\",\"product_code\":\"BILLING_001\"}",
+      "parsed": {
+        "route": "Billing_Dispute",
+        "severity": "High",
+        "macro": "Subscription_Billing_Error",
+        "product_code": "BILLING_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer cannot find where saved filters live on the phone. The customer says this is blocking their normal workflow.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L1_Support\",\"severity\":\"Medium\",\"macro\":\"Mobile_UI_Help\",\"product_code\":\"APP_CORE\"}",
+      "parsed": {
+        "route": "L1_Support",
+        "severity": "Medium",
+        "macro": "Mobile_UI_Help",
+        "product_code": "APP_CORE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User reports a cracked screen protector and asks for a fresh unit. The customer says the problem appeared after a recent change.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"Hardware_Replacement\",\"severity\":\"Medium\",\"macro\":\"Screen_Protector_Replacement\",\"product_code\":\"SP-001\"}",
+      "parsed": {
+        "route": "Hardware_Replacement",
+        "severity": "Medium",
+        "macro": "Screen_Protector_Replacement",
+        "product_code": "SP-001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs to exchange a narrow monitor arm for the wider version. They ask support to use the standard policy for this case.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURN_STANDARD_POLICY\",\"severity\":\"LOW\",\"macro\":\"MONITOR_ARM_EXCHANGE\",\"product_code\":\"MONITOR_ARM\"}",
+      "parsed": {
+        "route": "RETURN_STANDARD_POLICY",
+        "severity": "LOW",
+        "macro": "MONITOR_ARM_EXCHANGE",
+        "product_code": "MONITOR_ARM"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. The customer wants the response in plain language.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RMA_HUB_REPLACEMENT\",\"severity\":\"MEDIUM\",\"macro\":\"CUSTOMER_ISSUE_NO_REFUND\",\"product_code\":\"CHG_HUB_001\"}",
+      "parsed": {
+        "route": "RMA_HUB_REPLACEMENT",
+        "severity": "MEDIUM",
+        "macro": "CUSTOMER_ISSUE_NO_REFUND",
+        "product_code": "CHG_HUB_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User reports a cracked screen protector and asks for a fresh unit. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"Hardware_Replacement\",\"severity\":\"Medium\",\"macro\":\"Screen_Protector_Replacement\",\"product_code\":\"SP-001\"}",
+      "parsed": {
+        "route": "Hardware_Replacement",
+        "severity": "Medium",
+        "macro": "Screen_Protector_Replacement",
+        "product_code": "SP-001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. They ask for a concise response from support.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"TICKET_TRIAGE_FREE_EVAL_EXTENSION\",\"severity\":\"LOW\",\"macro\":\"CUSTOMER_REQUEST_EXTENSION\",\"product_code\":\"SUPPORT_TICKET_001\"}",
+      "parsed": {
+        "route": "TICKET_TRIAGE_FREE_EVAL_EXTENSION",
+        "severity": "LOW",
+        "macro": "CUSTOMER_REQUEST_EXTENSION",
+        "product_code": "SUPPORT_TICKET_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says mobile changes disappeared after the app tried to sync. The customer says the problem appeared after a recent change.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"mobile_sync_issue\",\"severity\":\"medium\",\"macro\":\"mobile_app_sync_failure\",\"product_code\":\"APP_SYNC_001\"}",
+      "parsed": {
+        "route": "mobile_sync_issue",
+        "severity": "medium",
+        "macro": "mobile_app_sync_failure",
+        "product_code": "APP_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. The customer says this is blocking their normal workflow.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_ACCESS_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"DEVICE_CHANGE_LOGIN_BLOCK\",\"product_code\":\"AUTH_SVC\"}",
+      "parsed": {
+        "route": "ACCOUNT_ACCESS_ISSUE",
+        "severity": "HIGH",
+        "macro": "DEVICE_CHANGE_LOGIN_BLOCK",
+        "product_code": "AUTH_SVC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. The customer wants the response in plain language.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_ACCESS_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"DEVICE_CHANGE_LOGIN_BLOCK\",\"product_code\":\"AUTH_SVC_001\"}",
+      "parsed": {
+        "route": "ACCOUNT_ACCESS_ISSUE",
+        "severity": "HIGH",
+        "macro": "DEVICE_CHANGE_LOGIN_BLOCK",
+        "product_code": "AUTH_SVC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says mobile changes disappeared after the app tried to sync. They mention this happened after trying again this morning.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"mobile_sync_failure\",\"severity\":\"medium\",\"macro\":\"app_sync_issue\",\"product_code\":\"APP_SYNC_001\"}",
+      "parsed": {
+        "route": "mobile_sync_failure",
+        "severity": "medium",
+        "macro": "app_sync_issue",
+        "product_code": "APP_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer cannot find where saved filters live on the phone. The customer asks for the case to be routed correctly.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"Support_Tier2_Product_Specific\",\"severity\":\"Medium\",\"macro\":\"Product_Navigation_Help\",\"product_code\":\"MOBILE_APP_UI\"}",
+      "parsed": {
+        "route": "Support_Tier2_Product_Specific",
+        "severity": "Medium",
+        "macro": "Product_Navigation_Help",
+        "product_code": "MOBILE_APP_UI"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. They say this is the first time the issue happened.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"account_access_troubleshooting\",\"severity\":\"high\",\"macro\":\"device_change_login_block\",\"product_code\":\"AUTH_SVC\"}",
+      "parsed": {
+        "route": "account_access_troubleshooting",
+        "severity": "high",
+        "macro": "device_change_login_block",
+        "product_code": "AUTH_SVC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer cannot find where saved filters live on the phone. The customer says the problem appeared after a recent change.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L1_Support\",\"severity\":\"Medium\",\"macro\":\"Mobile_UI_Issue\",\"product_code\":\"APP_UI_001\"}",
+      "parsed": {
+        "route": "L1_Support",
+        "severity": "Medium",
+        "macro": "Mobile_UI_Issue",
+        "product_code": "APP_UI_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer bought the wrong size laptop sleeve and wants a larger one. The customer wants the response in plain language.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS\",\"severity\":\"LOW\",\"macro\":\"SIZE_EXCHANGE\",\"product_code\":\"LAPTOP_SLEEVE\"}",
+      "parsed": {
+        "route": "RETURNS",
+        "severity": "LOW",
+        "macro": "SIZE_EXCHANGE",
+        "product_code": "LAPTOP_SLEEVE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says their account recovery email goes to an old inbox they cannot open. The customer asks whether support can take action today.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_RECOVERY_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"EMAIL_ACCESS_ISSUE\",\"product_code\":\"ACC_REC_001\"}",
+      "parsed": {
+        "route": "ACCOUNT_RECOVERY_ISSUE",
+        "severity": "HIGH",
+        "macro": "EMAIL_ACCESS_ISSUE",
+        "product_code": "ACC_REC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer needs instructions for inviting a teammate from mobile. The customer wants the response in plain language.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"TECH_SUPPORT_GUIDE\",\"severity\":\"LOW\",\"macro\":\"INSTRUCTION_GUIDE\",\"product_code\":\"MOBILE_INVITE_GUIDE\"}",
+      "parsed": {
+        "route": "TECH_SUPPORT_GUIDE",
+        "severity": "LOW",
+        "macro": "INSTRUCTION_GUIDE",
+        "product_code": "MOBILE_INVITE_GUIDE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer can preview the report, but saving the export crashes. They want a human review rather than an automated reply.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"L2_Support\",\"severity\":\"High\",\"macro\":\"Report_Export_Crash\",\"product_code\":\"REPORT_SVC\"}",
+      "parsed": {
+        "route": "L2_Support",
+        "severity": "High",
+        "macro": "Report_Export_Crash",
+        "product_code": "REPORT_SVC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer asks where to change invoice profile details. They say the issue is easy to reproduce.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"docs\",\"severity\":\"low\",\"macro\":\"knowledge_base\",\"product_code\":\"INV_PROFILE\"}",
+      "parsed": {
+        "route": "docs",
+        "severity": "low",
+        "macro": "knowledge_base",
+        "product_code": "INV_PROFILE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. They note that no payment details or private data are included.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"ReportExportFailure\",\"severity\":\"Medium\",\"macro\":\"DataLoss\",\"product_code\":\"APP_BUG_001\"}",
+      "parsed": {
+        "route": "ReportExportFailure",
+        "severity": "Medium",
+        "macro": "DataLoss",
+        "product_code": "APP_BUG_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. The customer asks for the next step.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RMA_INITIATE\",\"severity\":\"MEDIUM\",\"macro\":\"PRODUCT_DEFECT_NO_REFUND\",\"product_code\":\"CHG_HUB_001\"}",
+      "parsed": {
+        "route": "RMA_INITIATE",
+        "severity": "MEDIUM",
+        "macro": "PRODUCT_DEFECT_NO_REFUND",
+        "product_code": "CHG_HUB_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer asks where to change invoice profile details. The customer says this is blocking their normal workflow.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_support\",\"severity\":\"medium\",\"macro\":\"invoice_profile_update\",\"product_code\":\"INV_MGMT\"}",
+      "parsed": {
+        "route": "billing_support",
+        "severity": "medium",
+        "macro": "invoice_profile_update",
+        "product_code": "INV_MGMT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer received a broken charging hub and does not want a refund. They say the issue is easy to reproduce.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"hardware_troubleshooting\",\"severity\":\"medium\",\"macro\":\"hardware_failure_no_refund\",\"product_code\":\"CHB-2023\"}",
+      "parsed": {
+        "route": "hardware_troubleshooting",
+        "severity": "medium",
+        "macro": "hardware_failure_no_refund",
+        "product_code": "CHB-2023"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. They ask for confirmation after the case is routed.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"L2_Support\",\"severity\":\"High\",\"macro\":\"Bug_Report\",\"product_code\":\"APP_CORE\"}",
+      "parsed": {
+        "route": "L2_Support",
+        "severity": "High",
+        "macro": "Bug_Report",
+        "product_code": "APP_CORE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"L2_Account_Access\",\"severity\":\"High\",\"macro\":\"Account_Login_Block\",\"product_code\":\"AUTH_SVC\"}",
+      "parsed": {
+        "route": "L2_Account_Access",
+        "severity": "High",
+        "macro": "Account_Login_Block",
+        "product_code": "AUTH_SVC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says two devices now show different task lists. The message includes an account reference but no private details.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L1_Triage\",\"severity\":\"Medium\",\"macro\":\"Account_Reference_Present\",\"product_code\":\"GENERIC_SUPPORT\"}",
+      "parsed": {
+        "route": "L1_Triage",
+        "severity": "Medium",
+        "macro": "Account_Reference_Present",
+        "product_code": "GENERIC_SUPPORT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer asks where to change invoice profile details. The customer says they already checked the status page.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"BILLING_SUPPORT\",\"severity\":\"LOW\",\"macro\":\"INVOICE_PROFILE_GUIDANCE\",\"product_code\":\"INV_MGMT\"}",
+      "parsed": {
+        "route": "BILLING_SUPPORT",
+        "severity": "LOW",
+        "macro": "INVOICE_PROFILE_GUIDANCE",
+        "product_code": "INV_MGMT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs to exchange a narrow monitor arm for the wider version. They want a human review rather than an automated reply.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"human_review\",\"severity\":\"medium\",\"macro\":\"hardware_exchange\",\"product_code\":\"MONITOR_ARM_X\"}",
+      "parsed": {
+        "route": "human_review",
+        "severity": "medium",
+        "macro": "hardware_exchange",
+        "product_code": "MONITOR_ARM_X"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User needs the tax address corrected before the next billing cycle. The message includes an account reference but no private details.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Address_Correction\",\"severity\":\"Medium\",\"macro\":\"Address_Update\",\"product_code\":\"BILL_001\"}",
+      "parsed": {
+        "route": "Billing_Address_Correction",
+        "severity": "Medium",
+        "macro": "Address_Update",
+        "product_code": "BILL_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says the annual subscription was billed twice and wants it checked. The customer asks for the next step.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Dispute_Investigation\",\"severity\":\"High\",\"macro\":\"Billing_Error_Double_Charge\",\"product_code\":\"BILLING_001\"}",
+      "parsed": {
+        "route": "Billing_Dispute_Investigation",
+        "severity": "High",
+        "macro": "Billing_Error_Double_Charge",
+        "product_code": "BILLING_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks when the replacement charging cable will ship. They mention this happened after trying again this morning.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"shipping_inquiry\",\"severity\":\"low\",\"macro\":\"customer_query\",\"product_code\":\"N/A\"}",
+      "parsed": {
+        "route": "shipping_inquiry",
+        "severity": "low",
+        "macro": "customer_query",
+        "product_code": "N/A"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs to exchange a narrow monitor arm for the wider version. The customer says the problem appeared after a recent change.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"Hardware_Exchange_Request\",\"severity\":\"Medium\",\"macro\":\"Monitor_Arm_Upgrade\",\"product_code\":\"MONITOR_ARM_X1\"}",
+      "parsed": {
+        "route": "Hardware_Exchange_Request",
+        "severity": "Medium",
+        "macro": "Monitor_Arm_Upgrade",
+        "product_code": "MONITOR_ARM_X1"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User needs the tax address corrected before the next billing cycle. They say this is the first time the issue happened.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_address_correction\",\"severity\":\"medium\",\"macro\":\"address_update_request\",\"product_code\":\"BILLING_001\"}",
+      "parsed": {
+        "route": "billing_address_correction",
+        "severity": "medium",
+        "macro": "address_update_request",
+        "product_code": "BILLING_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says their account recovery email goes to an old inbox they cannot open. The customer says this is blocking their normal workflow.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_RECOVERY_EMAIL_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"EMAIL_ACCESS_ISSUE\",\"product_code\":\"AUTH_001\"}",
+      "parsed": {
+        "route": "ACCOUNT_RECOVERY_EMAIL_ISSUE",
+        "severity": "HIGH",
+        "macro": "EMAIL_ACCESS_ISSUE",
+        "product_code": "AUTH_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User reports a cracked screen protector and asks for a fresh unit. The customer asks whether support can take action today.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"Hardware_Replacement\",\"severity\":\"Medium\",\"macro\":\"Screen_Protector_Replacement\",\"product_code\":\"SP-001\"}",
+      "parsed": {
+        "route": "Hardware_Replacement",
+        "severity": "Medium",
+        "macro": "Screen_Protector_Replacement",
+        "product_code": "SP-001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says exporting a report closes the app without saving anything. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"L2_Support\",\"severity\":\"High\",\"macro\":\"Bug_Report\",\"product_code\":\"APP_BUG_001\"}",
+      "parsed": {
+        "route": "L2_Support",
+        "severity": "High",
+        "macro": "Bug_Report",
+        "product_code": "APP_BUG_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs to exchange a narrow monitor arm for the wider version. They say this is the first time the issue happened.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"Hardware_Exchange\",\"severity\":\"Medium\",\"macro\":\"Monitor_Arm_Exchange\",\"product_code\":\"MONITOR_ARM_X\"}",
+      "parsed": {
+        "route": "Hardware_Exchange",
+        "severity": "Medium",
+        "macro": "Monitor_Arm_Exchange",
+        "product_code": "MONITOR_ARM_X"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer asks where to change invoice profile details. The customer asks whether support can take action today.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_support\",\"severity\":\"medium\",\"macro\":\"invoice_profile_update\",\"product_code\":\"INV_PROFILE\"}",
+      "parsed": {
+        "route": "billing_support",
+        "severity": "medium",
+        "macro": "invoice_profile_update",
+        "product_code": "INV_PROFILE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User needs the tax address corrected before the next billing cycle. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Address_Correction\",\"severity\":\"Medium\",\"macro\":\"Address_Update_Request\",\"product_code\":\"BILLING_001\"}",
+      "parsed": {
+        "route": "Billing_Address_Correction",
+        "severity": "Medium",
+        "macro": "Address_Update_Request",
+        "product_code": "BILLING_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer needs instructions for inviting a teammate from mobile. They want a human review rather than an automated reply.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"TECH_SUPPORT_MOBILE_INVITE\",\"severity\":\"MEDIUM\",\"macro\":\"HUMAN_REVIEW\",\"product_code\":\"MOBILE_APP_V2\"}",
+      "parsed": {
+        "route": "TECH_SUPPORT_MOBILE_INVITE",
+        "severity": "MEDIUM",
+        "macro": "HUMAN_REVIEW",
+        "product_code": "MOBILE_APP_V2"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer needs instructions for inviting a teammate from mobile. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"TECH_SUPPORT_GUIDE\",\"severity\":\"MEDIUM\",\"macro\":\"GUIDE_INVITE_TEAMS\",\"product_code\":\"MOBILE_APP\"}",
+      "parsed": {
+        "route": "TECH_SUPPORT_GUIDE",
+        "severity": "MEDIUM",
+        "macro": "GUIDE_INVITE_TEAMS",
+        "product_code": "MOBILE_APP"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs to exchange a narrow monitor arm for the wider version. They ask for a concise response from support.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS\",\"severity\":\"LOW\",\"macro\":\"EXCHANGE_ARM\",\"product_code\":\"MONITOR_ARM\"}",
+      "parsed": {
+        "route": "RETURNS",
+        "severity": "LOW",
+        "macro": "EXCHANGE_ARM",
+        "product_code": "MONITOR_ARM"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer asks where to change invoice profile details. They note that no payment details or private data are included.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_support\",\"severity\":\"low\",\"macro\":\"invoice_profile_help\",\"product_code\":\"INV_PROFILE_HELP\"}",
+      "parsed": {
+        "route": "billing_support",
+        "severity": "low",
+        "macro": "invoice_profile_help",
+        "product_code": "INV_PROFILE_HELP"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. They note that no payment details or private data are included.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_ACCESS_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"LOGIN_BLOCK\",\"product_code\":\"AUTH_SVC\"}",
+      "parsed": {
+        "route": "ACCOUNT_ACCESS_ISSUE",
+        "severity": "HIGH",
+        "macro": "LOGIN_BLOCK",
+        "product_code": "AUTH_SVC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says two devices now show different task lists. The customer says they already checked the status page.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L2_Support\",\"severity\":\"Medium\",\"macro\":\"Device_Sync_Issue\",\"product_code\":\"DS-404\"}",
+      "parsed": {
+        "route": "L2_Support",
+        "severity": "Medium",
+        "macro": "Device_Sync_Issue",
+        "product_code": "DS-404"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks for help after being charged twice for the same subscription period. They ask support to use the standard policy for this case.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Dispute\",\"severity\":\"High\",\"macro\":\"Billing_Double_Charge\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "Billing_Dispute",
+        "severity": "High",
+        "macro": "Billing_Double_Charge",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says the annual subscription was billed twice and wants it checked. They say the issue is easy to reproduce.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_dispute\",\"severity\":\"medium\",\"macro\":\"billing_error\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "billing_dispute",
+        "severity": "medium",
+        "macro": "billing_error",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. The customer asks for the case to be routed correctly.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"Account_Access_Issue\",\"severity\":\"High\",\"macro\":\"Device_Change_Login_Block\",\"product_code\":\"AUTH_SVC\"}",
+      "parsed": {
+        "route": "Account_Access_Issue",
+        "severity": "High",
+        "macro": "Device_Change_Login_Block",
+        "product_code": "AUTH_SVC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User needs the tax address corrected before the next billing cycle. They mention this happened after trying again this morning.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing/Address Correction\",\"severity\":\"Medium\",\"macro\":\"Address_Update_Request\",\"product_code\":\"BILLING_001\"}",
+      "parsed": {
+        "route": "Billing/Address Correction",
+        "severity": "Medium",
+        "macro": "Address_Update_Request",
+        "product_code": "BILLING_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User needs the tax address corrected before the next billing cycle. They ask support to use the standard policy for this case.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_address_correction\",\"severity\":\"medium\",\"macro\":\"standard_policy\",\"product_code\":\"BILLING_001\"}",
+      "parsed": {
+        "route": "billing_address_correction",
+        "severity": "medium",
+        "macro": "standard_policy",
+        "product_code": "BILLING_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer bought the wrong size laptop sleeve and wants a larger one. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S3",
+        "macro": "SIZE_EXCHANGE_START",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS\",\"severity\":\"MEDIUM\",\"macro\":\"SIZE_EXCHANGE\",\"product_code\":\"LAPTOP_SLEEVE\"}",
+      "parsed": {
+        "route": "RETURNS",
+        "severity": "MEDIUM",
+        "macro": "SIZE_EXCHANGE",
+        "product_code": "LAPTOP_SLEEVE"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer asks when the replacement charging cable will ship. They ask for confirmation after the case is routed.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"Shipping Inquiry\",\"severity\":\"Low\",\"macro\":\"Customer Inquiry\",\"product_code\":\"N/A\"}",
+      "parsed": {
+        "route": "Shipping Inquiry",
+        "severity": "Low",
+        "macro": "Customer Inquiry",
+        "product_code": "N/A"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User reports a cracked screen protector and asks for a fresh unit. The message includes an account reference but no private details.",
+      "expected": {
+        "route": "FULFILLMENT_REPLACE",
+        "severity": "S2",
+        "macro": "DAMAGED_ITEM_SWAP",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"RETURNS\",\"severity\":\"LOW\",\"macro\":\"SCREEN_PROTECTOR_REPLACEMENT\",\"product_code\":\"SP-001\"}",
+      "parsed": {
+        "route": "RETURNS",
+        "severity": "LOW",
+        "macro": "SCREEN_PROTECTOR_REPLACEMENT",
+        "product_code": "SP-001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says two devices now show different task lists. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L1_Triage\",\"severity\":\"Medium\",\"macro\":\"Device_Sync_Issue\",\"product_code\":\"DS-404\"}",
+      "parsed": {
+        "route": "L1_Triage",
+        "severity": "Medium",
+        "macro": "Device_Sync_Issue",
+        "product_code": "DS-404"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User needs the tax address corrected before the next billing cycle. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing/Address Correction\",\"severity\":\"Medium\",\"macro\":\"Address_Correction_FollowUp\",\"product_code\":\"BILLING_001\"}",
+      "parsed": {
+        "route": "Billing/Address Correction",
+        "severity": "Medium",
+        "macro": "Address_Correction_FollowUp",
+        "product_code": "BILLING_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says their account recovery email goes to an old inbox they cannot open. They mention this happened after trying again this morning.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_RECOVERY_EMAIL_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"EMAIL_ACCESS_ISSUE\",\"product_code\":\"AUTH_001\"}",
+      "parsed": {
+        "route": "ACCOUNT_RECOVERY_EMAIL_ISSUE",
+        "severity": "HIGH",
+        "macro": "EMAIL_ACCESS_ISSUE",
+        "product_code": "AUTH_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says their account recovery email goes to an old inbox they cannot open. They ask for a concise response from support.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_RECOVERY_EMAIL_ISSUE\",\"severity\":\"MEDIUM\",\"macro\":\"EMAIL_ACCESS_ISSUE\",\"product_code\":\"AUTH_001\"}",
+      "parsed": {
+        "route": "ACCOUNT_RECOVERY_EMAIL_ISSUE",
+        "severity": "MEDIUM",
+        "macro": "EMAIL_ACCESS_ISSUE",
+        "product_code": "AUTH_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says the annual subscription was billed twice and wants it checked. They mention this happened after trying again this morning.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S2",
+        "macro": "DUPLICATE_CHARGE_EXPLAIN",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"billing_dispute\",\"severity\":\"high\",\"macro\":\"billing_error\",\"product_code\":\"SUBSCRIPTION_BILLING\"}",
+      "parsed": {
+        "route": "billing_dispute",
+        "severity": "high",
+        "macro": "billing_error",
+        "product_code": "SUBSCRIPTION_BILLING"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Buyer needs the current carrier status for the laptop stand. The customer says they already checked the status page.",
+      "expected": {
+        "route": "FULFILLMENT_TRACKING",
+        "severity": "S3",
+        "macro": "TRACKING_STATUS_CHECK",
+        "product_code": "PHYSICAL_GOODS"
+      },
+      "output": "{\"route\":\"SHIPMENT_INQUIRY\",\"severity\":\"LOW\",\"macro\":\"CUSTOMER_INFO_CHECK\",\"product_code\":\"LAPTOP_STAND\"}",
+      "parsed": {
+        "route": "SHIPMENT_INQUIRY",
+        "severity": "LOW",
+        "macro": "CUSTOMER_INFO_CHECK",
+        "product_code": "LAPTOP_STAND"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer cannot find where saved filters live on the phone. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "PRODUCT_GUIDANCE",
+        "severity": "S3",
+        "macro": "HOW_TO_STEPS",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"KB_SEARCH_GENERAL\",\"severity\":\"low\",\"macro\":\"Triage_General\",\"product_code\":\"UNKNOWN\"}",
+      "parsed": {
+        "route": "KB_SEARCH_GENERAL",
+        "severity": "low",
+        "macro": "Triage_General",
+        "product_code": "UNKNOWN"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says two devices now show different task lists. They mention this happened after trying again this morning.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"L1_Support\",\"severity\":\"Medium\",\"macro\":\"DeviceSyncIssue\",\"product_code\":\"DSYNC001\"}",
+      "parsed": {
+        "route": "L1_Support",
+        "severity": "Medium",
+        "macro": "DeviceSyncIssue",
+        "product_code": "DSYNC001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. The customer says the problem appeared after a recent change.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"TICKET_TRIAGE_FREE_EVALUATION_EXTENSION\",\"severity\":\"MEDIUM\",\"macro\":\"CUSTOMER_REPORTED_POST_CHANGE_ISSUE\",\"product_code\":\"GENERIC_SUPPORT\"}",
+      "parsed": {
+        "route": "TICKET_TRIAGE_FREE_EVALUATION_EXTENSION",
+        "severity": "MEDIUM",
+        "macro": "CUSTOMER_REPORTED_POST_CHANGE_ISSUE",
+        "product_code": "GENERIC_SUPPORT"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says mobile changes disappeared after the app tried to sync. The customer says previous help articles did not resolve it.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"mobile_sync_issue\",\"severity\":\"medium\",\"macro\":\"troubleshoot_sync_failure\",\"product_code\":\"APP_SYNC_001\"}",
+      "parsed": {
+        "route": "mobile_sync_issue",
+        "severity": "medium",
+        "macro": "troubleshoot_sync_failure",
+        "product_code": "APP_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says mobile changes disappeared after the app tried to sync. They ask for a concise response from support.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"mobile_sync_issue\",\"severity\":\"medium\",\"macro\":\"app_sync_failure\",\"product_code\":\"APP_SYNC_001\"}",
+      "parsed": {
+        "route": "mobile_sync_issue",
+        "severity": "medium",
+        "macro": "app_sync_failure",
+        "product_code": "APP_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User needs the tax address corrected before the next billing cycle. The customer asks for the next step.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Address_Correction\",\"severity\":\"Medium\",\"macro\":\"Address_Update_Request\",\"product_code\":\"BILL_ADDR_CORR\"}",
+      "parsed": {
+        "route": "Billing_Address_Correction",
+        "severity": "Medium",
+        "macro": "Address_Update_Request",
+        "product_code": "BILL_ADDR_CORR"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. They included a screenshot description but no attachment.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_ACCESS_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"DEVICE_CHANGE_LOGIN_BLOCK\",\"product_code\":\"AUTH_SVC\"}",
+      "parsed": {
+        "route": "ACCOUNT_ACCESS_ISSUE",
+        "severity": "HIGH",
+        "macro": "DEVICE_CHANGE_LOGIN_BLOCK",
+        "product_code": "AUTH_SVC"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer changed devices and now the account portal blocks every sign-in attempt. They ask for confirmation after the case is routed.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_ACCESS_ISSUE\",\"severity\":\"HIGH\",\"macro\":\"DEVICE_CHANGE_BLOCK\",\"product_code\":\"AUTH_PORTAL_001\"}",
+      "parsed": {
+        "route": "ACCOUNT_ACCESS_ISSUE",
+        "severity": "HIGH",
+        "macro": "DEVICE_CHANGE_BLOCK",
+        "product_code": "AUTH_PORTAL_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: Customer can preview the report, but saving the export crashes. The customer says the problem appeared after a recent change.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S2",
+        "macro": "EXPORT_CRASH_REPORT",
+        "product_code": "DESKTOP_APP"
+      },
+      "output": "{\"route\":\"ReportExportCrash\",\"severity\":\"High\",\"macro\":\"BugReport\",\"product_code\":\"[ProductCode]\"}",
+      "parsed": {
+        "route": "ReportExportCrash",
+        "severity": "High",
+        "macro": "BugReport",
+        "product_code": "[ProductCode]"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says their account recovery email goes to an old inbox they cannot open. They say this is the first time the issue happened.",
+      "expected": {
+        "route": "IDENTITY_ACCESS",
+        "severity": "S1",
+        "macro": "ACCOUNT_RECOVERY_FAST",
+        "product_code": "ACCOUNT_PORTAL"
+      },
+      "output": "{\"route\":\"ACCOUNT_RECOVERY_EMAIL_ISSUE\",\"severity\":\"MEDIUM\",\"macro\":\"EMAIL_ACCESS_ISSUE\",\"product_code\":\"AUTH_001\"}",
+      "parsed": {
+        "route": "ACCOUNT_RECOVERY_EMAIL_ISSUE",
+        "severity": "MEDIUM",
+        "macro": "EMAIL_ACCESS_ISSUE",
+        "product_code": "AUTH_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User says mobile changes disappeared after the app tried to sync. The customer asks for the next step.",
+      "expected": {
+        "route": "APP_DEFECTS",
+        "severity": "S1",
+        "macro": "SYNC_FAILURE_ESCALATE",
+        "product_code": "MOBILE_APP"
+      },
+      "output": "{\"route\":\"Mobile_Sync_Issue\",\"severity\":\"Medium\",\"macro\":\"Mobile_Sync_Failure\",\"product_code\":\"APP_SYNC_001\"}",
+      "parsed": {
+        "route": "Mobile_Sync_Issue",
+        "severity": "Medium",
+        "macro": "Mobile_Sync_Failure",
+        "product_code": "APP_SYNC_001"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User needs the tax address corrected before the next billing cycle. They want the request handled without a refund discussion.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "INVOICE_PROFILE_UPDATE",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"Billing_Address_Correction\",\"severity\":\"Medium\",\"macro\":\"Address_Update_No_Refund\",\"product_code\":\"BILL_ADDR_CORR\"}",
+      "parsed": {
+        "route": "Billing_Address_Correction",
+        "severity": "Medium",
+        "macro": "Address_Update_No_Refund",
+        "product_code": "BILL_ADDR_CORR"
+      }
+    },
+    {
+      "prompt": "Triage this ticket as JSON: User wants the free evaluation extended through Friday. The customer says the issue affects only one workspace.",
+      "expected": {
+        "route": "BILLING_LEDGER",
+        "severity": "S3",
+        "macro": "TRIAL_EXTENSION_REVIEW",
+        "product_code": "SUBSCRIPTION_CORE"
+      },
+      "output": "{\"route\":\"SUPPORT_TICKET_REVIEW\",\"severity\":\"MEDIUM\",\"macro\":\"TICKET_TRIAGE\",\"product_code\":\"GENERIC\"}",
+      "parsed": {
+        "route": "SUPPORT_TICKET_REVIEW",
+        "severity": "MEDIUM",
+        "macro": "TICKET_TRIAGE",
+        "product_code": "GENERIC"
+      }
+    }
+  ]
+}

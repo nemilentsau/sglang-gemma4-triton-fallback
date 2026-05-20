@@ -171,5 +171,5 @@ Expected:
 - SGLang reaches `/model_info`
 - the chat-completions smoke test fails during FlashInfer paged prefill
 
-The recorded failure is documented in
-[observed-results.md](observed-results.md).
+Recorded failures are documented in [observed-results.md](observed-results.md)
+and [run-results/2026-05-20.md](run-results/2026-05-20.md).

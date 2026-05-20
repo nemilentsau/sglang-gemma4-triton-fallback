@@ -67,6 +67,10 @@ docs/                     Verification runbook and observed run notes
 Useful docs:
 
 - [docs/verification.md](docs/verification.md): run the repro in order
+- [docs/reproduce-failure.md](docs/reproduce-failure.md): concise failure and
+  workaround path
+- [docs/run-results/2026-05-20.md](docs/run-results/2026-05-20.md): latest
+  tracked metrics and log excerpts
 - Reproduce the FlashInfer failure:
   [docs/verification.md#10-verify-flashinfer-failure](docs/verification.md#10-verify-flashinfer-failure)
 - [docs/observed-results.md](docs/observed-results.md): dated logs and results

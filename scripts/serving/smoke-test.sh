@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+cd "$REPO_ROOT"
+source "${REPO_ROOT}/scripts/setup/gradient-env.sh"
+
 BASE_URL="${BASE_URL:-http://127.0.0.1:30000}"
 MAX_NEW_TOKENS="${MAX_NEW_TOKENS:-48}"
 

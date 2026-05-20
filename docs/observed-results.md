@@ -2,6 +2,9 @@
 
 Date: 2026-05-19
 
+For the latest local run summary and metrics, see
+[run-results/2026-05-20.md](run-results/2026-05-20.md).
+
 ## Artifact
 
 - Base model: `google/gemma-4-E2B-it`

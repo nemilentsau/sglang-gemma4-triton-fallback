@@ -7,6 +7,8 @@ __pycache__/
 
 models/
 adapters/
-runs/
+runs/**
+!runs/**/
+!runs/**/score.json
 
 .DS_Store
