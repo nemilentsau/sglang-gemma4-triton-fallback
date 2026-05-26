@@ -1,5 +1,6 @@
 <script lang="ts">
   // Concept primer 2 — what SGLang is.
+  import { environment } from '$lib/data/runResults';
 </script>
 
 <section class="slide">
@@ -16,7 +17,7 @@
 
       <div class="version">
         <span class="vlabel mono">VERSION ON FILE</span>
-        <span class="vval mono">SGLang <strong>0.5.12</strong></span>
+        <span class="vval mono">SGLang <strong>{environment.sglang}</strong></span>
         <span class="vsub mono">on a CUDA 13 stack</span>
       </div>
     </div>

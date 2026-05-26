@@ -2,6 +2,7 @@
   // Crime #1 — the adapter that wouldn't load.
   import EvidenceCard from '$lib/components/EvidenceCard.svelte';
   import { evidence } from '$lib/data/evidence';
+  import { environment } from '$lib/data/runResults';
 </script>
 
 <section class="slide">
@@ -40,7 +41,7 @@
         <span class="tag mono">03</span>
         <div class="note">
           <p>
-            SGLang 0.5.12&rsquo;s LoRA loader can&rsquo;t place <code>lora_A</code> at the
+            SGLang {environment.sglang}&rsquo;s LoRA loader can&rsquo;t place <code>lora_A</code> at the
             key shape it expects for this structure. (We&rsquo;d already been forced off
             regex / <code>all-linear</code> <code>target_modules</code> by an SGLang
             constraint, onto explicit module names &mdash; and even those don&rsquo;t load.)

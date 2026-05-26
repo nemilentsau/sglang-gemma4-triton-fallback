@@ -1,5 +1,6 @@
 <script lang="ts">
   // Title card — opening frame of the case file.
+  import { environment } from '$lib/data/runResults';
 </script>
 
 <section class="slide">
@@ -9,7 +10,7 @@
   <div class="frame">
     <p class="eyebrow mono">
       <span class="rec" aria-hidden="true"></span>
-      CASE FILE · SGLANG 0.5.12 · GEMMA 4 E2B
+      CASE FILE · SGLANG {environment.sglang} · GEMMA 4 E2B
     </p>
 
     <h1 class="headline">
