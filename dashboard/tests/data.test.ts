@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { runResults, environment } from '../src/lib/data/runResults';
+import { evidence } from '../src/lib/data/evidence';
 
 describe('runResults', () => {
   it('has base and merged runs with the recorded throughput', () => {
@@ -20,5 +21,20 @@ describe('runResults', () => {
   it('names the test environment', () => {
     expect(environment.gpu).toContain('A6000');
     expect(environment.sglang).toBe('0.5.12');
+  });
+});
+
+describe('evidence', () => {
+  it('contains the native LoRA RuntimeError with the lora_A key', () => {
+    expect(evidence.loraError).toContain('Failed to load LoRA adapter');
+    expect(evidence.loraError).toContain('lora_A.weight');
+  });
+
+  it('contains the FlashInfer bidirectional-attention warning', () => {
+    expect(evidence.flashinferWarning).toContain('TritonAttnBackend');
+  });
+
+  it('contains the FlashInfer invalid-configuration error', () => {
+    expect(evidence.flashinferError).toContain('Invalid configuration');
   });
 });
