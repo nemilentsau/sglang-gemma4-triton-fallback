@@ -14,3 +14,8 @@ runs/**
 !runs/**/score.json
 
 .DS_Store
+
+# Dashboard (SvelteKit) build/deps
+dashboard/node_modules/
+dashboard/.svelte-kit/
+dashboard/build/
