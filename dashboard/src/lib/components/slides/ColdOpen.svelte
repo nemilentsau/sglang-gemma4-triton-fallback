@@ -60,7 +60,7 @@
   .frame {
     position: relative;
     z-index: 1;
-    max-width: 22ch;
+    max-width: min(90vw, 60rem);
   }
 
   .eyebrow {
@@ -85,12 +85,11 @@
   }
 
   .headline {
-    font-size: clamp(2.8rem, 7vw, 6rem);
-    line-height: 0.98;
+    font-size: clamp(2.6rem, 5.6vw, 5rem);
+    line-height: 1.0;
     letter-spacing: -0.02em;
     font-weight: 680;
     margin: 0;
-    max-width: 16ch;
     text-wrap: balance;
     opacity: 0;
     animation: rise 0.9s 0.28s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
