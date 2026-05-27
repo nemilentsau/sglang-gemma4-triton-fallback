@@ -1,0 +1,12 @@
+[    9285ms] ReferenceError: require is not defined
+    at <anonymous>:13:12
+    at h (https://code.claude.com/docs/_next/static/chunks/25552-8075eb6527a6cae7.js?dpl=dpl_EtkiNaDcAqXmJ68A444TMNe6BaWW:7:154729)
+    at https://code.claude.com/docs/_next/static/chunks/25552-8075eb6527a6cae7.js?dpl=dpl_EtkiNaDcAqXmJ68A444TMNe6BaWW:7:155543
+    at o1 (https://code.claude.com/docs/_next/static/chunks/87c73c54-09e1ba5c70e60a51.js?dpl=dpl_EtkiNaDcAqXmJ68A444TMNe6BaWW:1:88955)
+    at uE (https://code.claude.com/docs/_next/static/chunks/87c73c54-09e1ba5c70e60a51.js?dpl=dpl_EtkiNaDcAqXmJ68A444TMNe6BaWW:1:104847)
+    at ux (https://code.claude.com/docs/_next/static/chunks/87c73c54-09e1ba5c70e60a51.js?dpl=dpl_EtkiNaDcAqXmJ68A444TMNe6BaWW:1:104731)
+    at uE (https://code.claude.com/docs/_next/static/chunks/87c73c54-09e1ba5c70e60a51.js?dpl=dpl_EtkiNaDcAqXmJ68A444TMNe6BaWW:1:104827)
+    at ux (https://code.claude.com/docs/_next/static/chunks/87c73c54-09e1ba5c70e60a51.js?dpl=dpl_EtkiNaDcAqXmJ68A444TMNe6BaWW:1:104731)
+    at uE (https://code.claude.com/docs/_next/static/chunks/87c73c54-09e1ba5c70e60a51.js?dpl=dpl_EtkiNaDcAqXmJ68A444TMNe6BaWW:1:104892)
+    at ux (https://code.claude.com/docs/_next/static/chunks/87c73c54-09e1ba5c70e60a51.js?dpl=dpl_EtkiNaDcAqXmJ68A444TMNe6BaWW:1:104731)
+[    9577ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://code.claude.com/cdn-cgi/rum?:0
